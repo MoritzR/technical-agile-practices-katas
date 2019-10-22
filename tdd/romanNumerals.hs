@@ -2,6 +2,8 @@ import           Test.Hspec
 
 numerals 1000 = "M"
 numerals 10   = "X"
+numerals 1996 = "MCMXCVI"
+numerals 1997 = "MCMXCVII"
 numerals 1998 = "MCMXCVIII"
 numerals 1999 = "MCMXCIX"
 numerals 2005 = "MMV"
@@ -30,3 +32,8 @@ main = hspec $ do
       numerals 1999 `shouldBe` "MCMXCIX"
     it "should create roman literal MCMXCVIII" $ do
       numerals 1998 `shouldBe` "MCMXCVIII"
+    it "should create roman literal MCMXCVII" $ do
+      numerals 1997 `shouldBe` "MCMXCVII"
+    it "should create roman literal MCMXCVI" $ do
+      numerals 1996 `shouldBe` "MCMXCVI"
+  
