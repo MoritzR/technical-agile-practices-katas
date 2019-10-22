@@ -7,7 +7,6 @@ numerals 1995 = "MCMXCV"
 numerals 1999 = "MCMXCIX"
 numerals 2005 = "MMV"
 numerals x | x <= 3 = replicate x 'I'
-
            | lastDigit >= 5 && lastDigit <= 8 = numerals (x - lastDigit + 5) ++ numerals (lastDigit - 5)
   where lastDigit = x `mod` 10
 
