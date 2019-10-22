@@ -1,14 +1,13 @@
 import           Test.Hspec
 
 numerals 1000 = "M"
-numerals 6    = "VI"
-numerals 7    = "VII"
-numerals 8    = "VIII"
+numerals 5    = "V"
 numerals 10   = "X"
 numerals 1995 = "MCMXCV"
 numerals 1999 = "MCMXCIX"
 numerals 2005 = "MMV"
-numerals x | x <= 3                 = replicate x 'I'
+numerals x | x <= 3 = replicate x 'I'
+           | x >= 5 && x <= 8       = numerals 5 ++ numerals (x - 5) 
            | x >= 2005 && x <= 2008 = numerals 2005 ++ numerals (x - 2005)
            | x >= 1995 && x <= 1998 = numerals 1995 ++ numerals (x - 1995)
 
