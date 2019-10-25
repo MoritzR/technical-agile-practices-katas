@@ -8,9 +8,12 @@ factors x = [x]
 main :: IO ()
 main = hspec $ do
   describe "splitting a number into prime factors" $ do
-    it "should split 2" $ do
-        factors 2 `shouldBe` [2]
-    it "should split 3" $ do
-        factors 3 `shouldBe` [3]
-    it "should split 4" $ do
-        factors 4 `shouldBe` [2,2]
+    let test (number, primeFactors) = it ("should split " ++ show number ++ " into " ++ show primeFactors) $ factors number `shouldBe` primeFactors
+        testAll = foldl1 (>>) . map test
+        examples = [
+            (2, [2]),
+            (3, [3]),
+            (4, [2,2])
+            ]
+
+    testAll examples 
