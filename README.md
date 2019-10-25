@@ -13,7 +13,10 @@ This repo contains katas from the book **Agile Technical Practices Distilled: A 
     - Stats Calculator
     - Anagrams
 - Classic TDD III
-    - [Roman Numerals](tdd/romanNumerals.hs)
+    - [Roman Numerals (without TPP)](tdd/romanNumerals.hs)
+    - [Prime factors](tdd/primefactors.hs)
+- Object Calisthenics
+    - Tic Tac Toe
 
 ## Running the code
 You need to have [GHC](https://www.haskell.org/downloads/) and [Hspec](https://hspec.github.io/) installed.
