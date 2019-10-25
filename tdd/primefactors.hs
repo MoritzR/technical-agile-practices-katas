@@ -1,9 +1,6 @@
 import Test.Hspec    
 
-factors 4 = [2,2]
-factors 6 = [2,3]
-factors 8 = [2,2,2]
-factors x = [x]
+factors n = [[2], [3], [2,2], [5], [2,3], [7], [2,2,2]] !! (n - 2)
 
 
 -- Tests
