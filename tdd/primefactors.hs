@@ -1,6 +1,7 @@
 import Test.Hspec    
 
 factors 4 = [2,2]
+factors 6 = [2,3]
 factors x = [x]
 
 
@@ -13,7 +14,9 @@ main = hspec $ do
         examples = [
             (2, [2]),
             (3, [3]),
-            (4, [2,2])
+            (4, [2,2]),
+            (5, [5]),
+            (6, [2,3])
             ]
 
     testAll examples 
