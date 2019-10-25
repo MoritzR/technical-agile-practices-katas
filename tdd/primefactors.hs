@@ -1,5 +1,6 @@
 import Test.Hspec    
 
+factors 4 = [2,2]
 factors x = [x]
 
 
@@ -11,3 +12,5 @@ main = hspec $ do
         factors 2 `shouldBe` [2]
     it "should split 3" $ do
         factors 3 `shouldBe` [3]
+    it "should split 4" $ do
+        factors 4 `shouldBe` [2,2]
