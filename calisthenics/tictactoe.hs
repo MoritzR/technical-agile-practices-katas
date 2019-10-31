@@ -1,11 +1,12 @@
 import Test.Hspec
-
+import Prelude hiding (Left)
 -- Game
 
 newtype Board = Board String
   deriving (Eq, Show)
 data Position =   TopLeft | Top | TopRight |
-                  Middle | Bottom
+                  Left | Middle | 
+                  Bottom
   deriving Show
 
 emptyBoard = Board ""
@@ -14,6 +15,7 @@ place :: Position -> Board -> Board
 place Middle _ = Board "--- -x- ---"
 place TopLeft _ = Board "x-- --- ---"
 place TopRight _ = Board "--x --- ---"
+place Left _ = Board "--- x-- ---"
 place Bottom _ = Board "--- --- -x-"
 place Top _ = Board "-x- --- ---"
 
@@ -31,6 +33,7 @@ main = hspec $ do
             (TopLeft, Board "x-- --- ---"),
             (Top, Board "-x- --- ---"),
             (TopRight, Board "--x --- ---"),
+            (Left, Board "--- x-- ---"),
             (Middle, Board "--- -x- ---"),
             (Bottom, Board "--- --- -x-")]
   
