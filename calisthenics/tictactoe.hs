@@ -7,7 +7,8 @@ newtype Board = Board String
 
 emptyBoard = Board ""
 
-place _ _ = Board "--- -x- ---"
+place "middle" _ = Board "--- -x- ---"
+place "top-left" _ = Board "x-- --- ---"
 
 
 
@@ -22,3 +23,9 @@ main = hspec $ do
       let newBoard = place "middle" emptyBoard
       
       newBoard `shouldBe` Board "--- -x- ---"
+    it "should place an x when placing first on the top left" $ do
+      let board = emptyBoard
+
+      let newBoard = place "top-left" emptyBoard
+      
+      newBoard `shouldBe` Board "x-- --- ---"
