@@ -5,6 +5,7 @@ import Test.Hspec
 newtype Board = Board String
   deriving (Eq, Show)
 data Position = Middle | TopLeft | Bottom
+  deriving Show
 
 emptyBoard = Board ""
 
@@ -20,21 +21,12 @@ place Bottom _ = Board "--- --- -x-"
 main :: IO ()
 main = hspec $ do
   describe "tic tac toe" $ do
-    it "should place an x when placing first in the middle" $ do
-      let board = emptyBoard
-
-      let newBoard = place Middle emptyBoard
-      
-      newBoard `shouldBe` Board "--- -x- ---"
-    it "should place an x when placing first on the top left" $ do
-      let board = emptyBoard
-
-      let newBoard = place TopLeft emptyBoard
-      
-      newBoard `shouldBe` Board "x-- --- ---"
-    it "should place an x when placing first on the bottom" $ do
-      let board = emptyBoard
-
-      let newBoard = place Bottom emptyBoard
-      
-      newBoard `shouldBe` Board "--- --- -x-"
+    describe "placing on the first turn" $ do
+      let test (position, board) = it ("should place an x in the " ++ show position) $ place position emptyBoard `shouldBe` board
+          testAll = foldl1 (>>) . map test
+          examples = [
+            (Middle, Board "--- -x- ---"),
+            (TopLeft, Board "x-- --- ---"),
+            (Bottom, Board "--- --- -x-")]
+  
+      testAll examples
