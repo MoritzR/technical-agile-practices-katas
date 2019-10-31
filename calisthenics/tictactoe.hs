@@ -2,10 +2,12 @@ import Test.Hspec
 
 -- Game
 
+newtype Board = Board String
+  deriving (Eq, Show)
 
-emptyBoard = ""
+emptyBoard = Board ""
 
-place _ _ = "x"
+place _ _ = Board "--- -x- ---"
 
 
 
@@ -19,4 +21,4 @@ main = hspec $ do
 
       let newBoard = place "middle" emptyBoard
       
-      newBoard `shouldContain` "x"
+      newBoard `shouldBe` Board "--- -x- ---"
