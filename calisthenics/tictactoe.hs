@@ -4,7 +4,8 @@ import Test.Hspec
 
 newtype Board = Board String
   deriving (Eq, Show)
-data Position = TopLeft | Top | Middle | Bottom
+data Position =   TopLeft | Top | TopRight |
+                  Middle | Bottom
   deriving Show
 
 emptyBoard = Board ""
@@ -12,6 +13,7 @@ emptyBoard = Board ""
 place :: Position -> Board -> Board
 place Middle _ = Board "--- -x- ---"
 place TopLeft _ = Board "x-- --- ---"
+place TopRight _ = Board "--x --- ---"
 place Bottom _ = Board "--- --- -x-"
 place Top _ = Board "-x- --- ---"
 
@@ -28,6 +30,7 @@ main = hspec $ do
           examples = [
             (TopLeft, Board "x-- --- ---"),
             (Top, Board "-x- --- ---"),
+            (TopRight, Board "--x --- ---"),
             (Middle, Board "--- -x- ---"),
             (Bottom, Board "--- --- -x-")]
   
