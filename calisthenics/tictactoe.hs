@@ -4,13 +4,14 @@ import Test.Hspec
 
 newtype Board = Board String
   deriving (Eq, Show)
-data Position = Middle | TopLeft
+data Position = Middle | TopLeft | Bottom
 
 emptyBoard = Board ""
 
 place :: Position -> Board -> Board
 place Middle _ = Board "--- -x- ---"
 place TopLeft _ = Board "x-- --- ---"
+place Bottom _ = Board "--- --- -x-"
 
 
 
@@ -31,3 +32,9 @@ main = hspec $ do
       let newBoard = place TopLeft emptyBoard
       
       newBoard `shouldBe` Board "x-- --- ---"
+    it "should place an x when placing first on the bottom" $ do
+      let board = emptyBoard
+
+      let newBoard = place Bottom emptyBoard
+      
+      newBoard `shouldBe` Board "--- --- -x-"
