@@ -16,7 +16,7 @@ This repo contains katas from the book **Agile Technical Practices Distilled: A 
     - [Roman Numerals (without TPP)](tdd/romanNumerals.hs)
     - [Prime factors](tdd/primefactors.hs)
 - Object Calisthenics
-    - Tic Tac Toe
+    - [Tic Tac Toe](calisthenics/tictactoe.hs)
 
 ## Running the code
 You need to have [GHC](https://www.haskell.org/downloads/) and [Hspec](https://hspec.github.io/) installed.
