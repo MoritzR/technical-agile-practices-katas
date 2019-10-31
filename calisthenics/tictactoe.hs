@@ -16,7 +16,7 @@ place _ _ = Board "--- -x- ---"
 main :: IO ()
 main = hspec $ do
   describe "tic tac toe" $ do
-    it "placing first should result in the board having an x" $ do
+    it "should place an x when placing first in the middle" $ do
       let board = emptyBoard
 
       let newBoard = place "middle" emptyBoard
