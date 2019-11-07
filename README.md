@@ -19,6 +19,7 @@ This repo contains katas from the book **Agile Technical Practices Distilled: A 
     - [Tic Tac Toe](calisthenics/tictactoe.hs)
 - Testing Legacy Code
     - [Characterization tests on Gilded Rose kata](testingLegacyCode/gildedRose/)
+    - [Golden Master on Gilded Rose kata](testingLegacyCode/gildedRose/goldenMasterTest.sh)
 
 ## Running the code
 You need to have [GHC](https://www.haskell.org/downloads/) and [Hspec](https://hspec.github.io/) installed.
