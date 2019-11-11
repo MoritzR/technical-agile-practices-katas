@@ -23,9 +23,7 @@ updateItemQuality (Item name sellIn quality) =
       then
         quality
         + 1
-        + (if name
-               == "Backstage passes to a TAFKAL80ETC concert"
-               && sellIn
+        + (if sellIn
                <  11
                && quality
                <  49
