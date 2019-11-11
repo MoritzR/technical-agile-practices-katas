@@ -25,10 +25,10 @@ updateItemQuality (Item name sellIn quality)
   | otherwise   = max (quality - 1) 0
 
 updateBackStagePassQuality sellIn quality
-  | sellIn <= 0                  = 0
-  | sellIn < 6 && quality <= 47  = quality + 3
-  | sellIn < 11 && quality <= 48 = quality + 2
-  | otherwise                    = quality + 1
+  | sellIn <= 0                   = 0
+  | sellIn <= 5 && quality <= 47  = quality + 3
+  | sellIn <= 10 && quality <= 48 = quality + 2
+  | otherwise                     = quality + 1
 
 updateQuality :: GildedRose -> GildedRose
 updateQuality = map updateQualityItem
