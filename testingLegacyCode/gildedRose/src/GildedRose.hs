@@ -9,24 +9,24 @@ instance Show Item where
   show (Item name sellIn quality) =
     name ++ ", " ++ show sellIn ++ ", " ++ show quality
 
-
 updateItemQuality :: Item -> Int
-updateItemQuality (Item "Aged Brie" sellIn quality) =
-  if quality >= 50 then quality else quality + 1
+
+updateItemQuality (Item "Aged Brie" sellIn quality) = min (quality + 1) 50
+
 updateItemQuality (Item "Sulfuras, Hand of Ragnaros" sellIn quality) = quality
+
 updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality)
-  = if quality >= 50
-    then quality
-    else increaseBackStagePassQuality sellIn quality
+  = min (increaseBackStagePassQuality sellIn quality) 50
+
 updateItemQuality (Item name sellIn quality) =
   if quality > 0 then quality - 1 else quality
 
-increaseBackStagePassQuality sellIn quality =
-  quality + qualityIncrease
-  where qualityIncrease
-          | sellIn < 6 && quality <= 47 = 3
-          | sellIn < 11 && quality <= 48 = 2
-          | otherwise = 1
+
+increaseBackStagePassQuality sellIn quality = quality + qualityIncrease
+ where
+  qualityIncrease | sellIn < 6 && quality <= 47  = 3
+                  | sellIn < 11 && quality <= 48 = 2
+                  | otherwise                    = 1
 
 updateQuality :: GildedRose -> GildedRose
 updateQuality = map updateQualityItem
