@@ -29,20 +29,19 @@ increaseBackStagePassQuality sellIn quality = quality + qualityIncrease
 
 updateQuality :: GildedRose -> GildedRose
 updateQuality = map updateQualityItem
- where
-  updateQualityItem (Item name sellIn quality) =
-    let quality' = updateItemQuality (Item name sellIn quality)
 
-        sellIn' =
-            if name /= "Sulfuras, Hand of Ragnaros" then sellIn - 1 else sellIn
-    in  if sellIn' < 0
-          then if name == "Aged Brie"
-            then if quality' < 50
-              then (Item name sellIn' (quality' + 1))
+updateQualityItem (Item name sellIn quality) =
+  let quality' = updateItemQuality (Item name sellIn quality)
+      sellIn' =
+          if name /= "Sulfuras, Hand of Ragnaros" then sellIn - 1 else sellIn
+  in  if sellIn' < 0
+        then if name == "Aged Brie"
+          then if quality' < 50
+            then (Item name sellIn' (quality' + 1))
+            else (Item name sellIn' quality')
+          else if name == "Backstage passes to a TAFKAL80ETC concert"
+            then (Item name sellIn' 0)
+            else if quality' > 0 && name /= "Sulfuras, Hand of Ragnaros"
+              then (Item name sellIn' (quality' - 1))
               else (Item name sellIn' quality')
-            else if name == "Backstage passes to a TAFKAL80ETC concert"
-              then (Item name sellIn' 0)
-              else if quality' > 0 && name /= "Sulfuras, Hand of Ragnaros"
-                then (Item name sellIn' (quality' - 1))
-                else (Item name sellIn' quality')
-          else (Item name sellIn' quality')
+        else (Item name sellIn' quality')
