@@ -9,29 +9,33 @@ instance Show Item where
   show (Item name sellIn quality) =
     name ++ ", " ++ show sellIn ++ ", " ++ show quality
 
+
+updateItemQuality :: Item -> Int
+updateItemQuality (Item name sellIn quality) =
+  if name /= "Aged Brie"
+    && name /= "Backstage passes to a TAFKAL80ETC concert"
+  then
+  if quality > 0 && name /= "Sulfuras, Hand of Ragnaros"
+  then quality - 1
+  else quality
+  else
+  if quality < 50
+  then
+    quality + 1 +
+      (if name == "Backstage passes to a TAFKAL80ETC concert" && sellIn < 11 && quality < 49
+        then
+          1 + (if sellIn < 6 && quality < 48
+              then 1
+              else 0)
+        else 0)
+  else quality
+
 updateQuality :: GildedRose -> GildedRose
 updateQuality = map updateQualityItem
   where
     updateQualityItem (Item name sellIn quality) =
       let
-        quality' =
-          if name /= "Aged Brie"
-             && name /= "Backstage passes to a TAFKAL80ETC concert"
-          then
-            if quality > 0 && name /= "Sulfuras, Hand of Ragnaros"
-            then quality - 1
-            else quality
-          else
-            if quality < 50
-            then
-              quality + 1 +
-                (if name == "Backstage passes to a TAFKAL80ETC concert" && sellIn < 11 && quality < 49
-                 then
-                    1 + (if sellIn < 6 && quality < 48
-                        then 1
-                        else 0)
-                 else 0)
-            else quality
+        quality' = updateItemQuality (Item name sellIn quality)
 
         sellIn' =
           if name /= "Sulfuras, Hand of Ragnaros"
