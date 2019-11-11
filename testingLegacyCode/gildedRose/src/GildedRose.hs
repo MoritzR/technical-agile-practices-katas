@@ -18,8 +18,7 @@ updateItemQuality (Item "Sulfuras, Hand of Ragnaros" sellIn quality) = quality
 updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality)
   = min (increaseBackStagePassQuality sellIn quality) 50
 
-updateItemQuality (Item name sellIn quality) =
-  if quality > 0 then quality - 1 else quality
+updateItemQuality (Item name sellIn quality) = max (quality - 1) 0
 
 
 increaseBackStagePassQuality sellIn quality = quality + qualityIncrease
