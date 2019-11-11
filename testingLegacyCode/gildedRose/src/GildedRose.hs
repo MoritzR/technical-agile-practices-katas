@@ -15,9 +15,9 @@ updateItemQuality (Item "Aged Brie" sellIn quality) =
   if quality >= 50 then quality else quality + 1
 updateItemQuality (Item "Sulfuras, Hand of Ragnaros" sellIn quality) = quality
 updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality) =
-  if quality < 50
-    then
-      quality
+  if quality >= 50
+    then quality
+    else quality
       + 1
       + (if sellIn
              <  11
@@ -26,7 +26,6 @@ updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quali
           then 1 + (if sellIn < 6 && quality < 48 then 1 else 0)
           else 0
         )
-    else quality
 updateItemQuality (Item name sellIn quality) =
   if quality > 0
       then quality - 1
