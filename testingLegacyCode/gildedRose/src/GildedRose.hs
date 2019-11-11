@@ -30,18 +30,33 @@ increaseBackStagePassQuality sellIn quality = quality + qualityIncrease
 updateQuality :: GildedRose -> GildedRose
 updateQuality = map updateQualityItem
 
+
+updateQualityItem (Item "Aged Brie" sellIn quality) =
+  let name     = "Aged Brie"
+      quality' = updateItemQuality (Item name sellIn quality)
+      sellIn'  = sellIn - 1
+  in  if quality' < 50 && sellIn' < 0
+        then (Item name sellIn' (quality' + 1))
+        else (Item name sellIn' quality')
+
+updateQualityItem (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality)
+  = let name     = "Backstage passes to a TAFKAL80ETC concert"
+        quality' = updateItemQuality (Item name sellIn quality)
+        sellIn'  = sellIn - 1
+    in  if sellIn' < 0
+          then (Item name sellIn' 0)
+          else (Item name sellIn' quality')
+
+updateQualityItem (Item "Sulfuras, Hand of Ragnaros" sellIn quality) =
+  let name     = "Sulfuras, Hand of Ragnaros"
+      quality' = updateItemQuality (Item name sellIn quality)
+      sellIn'  = sellIn
+  in  (Item name sellIn' quality')
+
+
 updateQualityItem (Item name sellIn quality) =
   let quality' = updateItemQuality (Item name sellIn quality)
-      sellIn' =
-          if name /= "Sulfuras, Hand of Ragnaros" then sellIn - 1 else sellIn
-  in  if sellIn' < 0
-        then if name == "Aged Brie"
-          then if quality' < 50
-            then (Item name sellIn' (quality' + 1))
-            else (Item name sellIn' quality')
-          else if name == "Backstage passes to a TAFKAL80ETC concert"
-            then (Item name sellIn' 0)
-            else if quality' > 0 && name /= "Sulfuras, Hand of Ragnaros"
-              then (Item name sellIn' (quality' - 1))
-              else (Item name sellIn' quality')
+      sellIn'  = sellIn - 1
+  in  if sellIn' < 0 && quality' > 0
+        then (Item name sellIn' (quality' - 1))
         else (Item name sellIn' quality')
