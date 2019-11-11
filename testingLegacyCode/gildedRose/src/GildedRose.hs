@@ -14,25 +14,20 @@ updateItemQuality :: Item -> Int
 updateItemQuality (Item "Aged Brie" sellIn quality) =
   if quality >= 50 then quality else quality + 1
 updateItemQuality (Item "Sulfuras, Hand of Ragnaros" sellIn quality) = quality
-updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality) =
-  if quality >= 50
+updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality)
+  = if quality >= 50
     then quality
     else increaseBackStagePassQuality sellIn quality
 updateItemQuality (Item name sellIn quality) =
-  if quality > 0
-      then quality - 1
-      else quality
+  if quality > 0 then quality - 1 else quality
 
 increaseBackStagePassQuality sellIn quality =
   quality
-  + 1
-  + (if sellIn
-          <  11
-          && quality
-          <  49
-      then 1 + (if sellIn < 6 && quality < 48 then 1 else 0)
-      else 0
-    )
+    + 1
+    + (if sellIn < 11 && quality < 49
+        then 1 + (if sellIn < 6 && quality < 48 then 1 else 0)
+        else 0
+      )
 
 updateQuality :: GildedRose -> GildedRose
 updateQuality = map updateQualityItem
