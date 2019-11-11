@@ -11,8 +11,10 @@ instance Show Item where
 
 
 updateItemQuality :: Item -> Int
+updateItemQuality (Item "Aged Brie" sellIn quality) =
+  if quality >= 50 then quality else quality + 1
 updateItemQuality (Item name sellIn quality) =
-  if name /= "Aged Brie" && name /= "Backstage passes to a TAFKAL80ETC concert"
+  if name /= "Backstage passes to a TAFKAL80ETC concert"
     then if quality > 0 && name /= "Sulfuras, Hand of Ragnaros"
       then quality - 1
       else quality
