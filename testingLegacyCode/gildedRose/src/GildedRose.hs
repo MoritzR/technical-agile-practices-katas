@@ -22,11 +22,11 @@ updateItemQuality (Item name sellIn quality) =
   if quality > 0 then quality - 1 else quality
 
 increaseBackStagePassQuality sellIn quality =
-  quality
-    + (if sellIn < 11 && quality < 49
-        then 2 + (if sellIn < 6 && quality < 48 then 1 else 0)
-        else 1
-      )
+  quality + qualityIncrease
+  where qualityIncrease
+          | sellIn < 11 && quality < 49 && not (sellIn < 6 && quality < 48) = 2
+          | sellIn < 11 && quality < 49 && (sellIn < 6 && quality < 48) = 3
+          | otherwise = 1
 
 updateQuality :: GildedRose -> GildedRose
 updateQuality = map updateQualityItem
