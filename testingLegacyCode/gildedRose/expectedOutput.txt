@@ -10,6 +10,8 @@ Backstage passes to a TAFKAL80ETC concert, 15, 20
 Backstage passes to a TAFKAL80ETC concert, 10, 49
 Backstage passes to a TAFKAL80ETC concert, 5, 49
 Conjured Mana Cake, 3, 6
+Backstage passes to a TAFKAL80ETC concert, 5, 48
+Aged Brie, 2, 49
 
 -------- day 1 --------
 name, sellIn, quality
@@ -22,6 +24,8 @@ Backstage passes to a TAFKAL80ETC concert, 14, 21
 Backstage passes to a TAFKAL80ETC concert, 9, 50
 Backstage passes to a TAFKAL80ETC concert, 4, 50
 Conjured Mana Cake, 2, 5
+Backstage passes to a TAFKAL80ETC concert, 4, 50
+Aged Brie, 1, 50
 
 -------- day 2 --------
 name, sellIn, quality
@@ -34,6 +38,8 @@ Backstage passes to a TAFKAL80ETC concert, 13, 22
 Backstage passes to a TAFKAL80ETC concert, 8, 50
 Backstage passes to a TAFKAL80ETC concert, 3, 50
 Conjured Mana Cake, 1, 4
+Backstage passes to a TAFKAL80ETC concert, 3, 50
+Aged Brie, 0, 50
 
 -------- day 3 --------
 name, sellIn, quality
@@ -46,6 +52,8 @@ Backstage passes to a TAFKAL80ETC concert, 12, 23
 Backstage passes to a TAFKAL80ETC concert, 7, 50
 Backstage passes to a TAFKAL80ETC concert, 2, 50
 Conjured Mana Cake, 0, 3
+Backstage passes to a TAFKAL80ETC concert, 2, 50
+Aged Brie, -1, 50
 
 -------- day 4 --------
 name, sellIn, quality
@@ -58,6 +66,8 @@ Backstage passes to a TAFKAL80ETC concert, 11, 24
 Backstage passes to a TAFKAL80ETC concert, 6, 50
 Backstage passes to a TAFKAL80ETC concert, 1, 50
 Conjured Mana Cake, -1, 1
+Backstage passes to a TAFKAL80ETC concert, 1, 50
+Aged Brie, -2, 50
 
 -------- day 5 --------
 name, sellIn, quality
@@ -70,6 +80,8 @@ Backstage passes to a TAFKAL80ETC concert, 10, 25
 Backstage passes to a TAFKAL80ETC concert, 5, 50
 Backstage passes to a TAFKAL80ETC concert, 0, 50
 Conjured Mana Cake, -2, 0
+Backstage passes to a TAFKAL80ETC concert, 0, 50
+Aged Brie, -3, 50
 
 -------- day 6 --------
 name, sellIn, quality
@@ -82,6 +94,8 @@ Backstage passes to a TAFKAL80ETC concert, 9, 27
 Backstage passes to a TAFKAL80ETC concert, 4, 50
 Backstage passes to a TAFKAL80ETC concert, -1, 0
 Conjured Mana Cake, -3, 0
+Backstage passes to a TAFKAL80ETC concert, -1, 0
+Aged Brie, -4, 50
 
 -------- day 7 --------
 name, sellIn, quality
@@ -94,6 +108,8 @@ Backstage passes to a TAFKAL80ETC concert, 8, 29
 Backstage passes to a TAFKAL80ETC concert, 3, 50
 Backstage passes to a TAFKAL80ETC concert, -2, 0
 Conjured Mana Cake, -4, 0
+Backstage passes to a TAFKAL80ETC concert, -2, 0
+Aged Brie, -5, 50
 
 -------- day 8 --------
 name, sellIn, quality
@@ -106,6 +122,8 @@ Backstage passes to a TAFKAL80ETC concert, 7, 31
 Backstage passes to a TAFKAL80ETC concert, 2, 50
 Backstage passes to a TAFKAL80ETC concert, -3, 0
 Conjured Mana Cake, -5, 0
+Backstage passes to a TAFKAL80ETC concert, -3, 0
+Aged Brie, -6, 50
 
 -------- day 9 --------
 name, sellIn, quality
@@ -118,6 +136,8 @@ Backstage passes to a TAFKAL80ETC concert, 6, 33
 Backstage passes to a TAFKAL80ETC concert, 1, 50
 Backstage passes to a TAFKAL80ETC concert, -4, 0
 Conjured Mana Cake, -6, 0
+Backstage passes to a TAFKAL80ETC concert, -4, 0
+Aged Brie, -7, 50
 
 -------- day 10 --------
 name, sellIn, quality
@@ -130,6 +150,8 @@ Backstage passes to a TAFKAL80ETC concert, 5, 35
 Backstage passes to a TAFKAL80ETC concert, 0, 50
 Backstage passes to a TAFKAL80ETC concert, -5, 0
 Conjured Mana Cake, -7, 0
+Backstage passes to a TAFKAL80ETC concert, -5, 0
+Aged Brie, -8, 50
 
 -------- day 11 --------
 name, sellIn, quality
@@ -142,6 +164,8 @@ Backstage passes to a TAFKAL80ETC concert, 4, 38
 Backstage passes to a TAFKAL80ETC concert, -1, 0
 Backstage passes to a TAFKAL80ETC concert, -6, 0
 Conjured Mana Cake, -8, 0
+Backstage passes to a TAFKAL80ETC concert, -6, 0
+Aged Brie, -9, 50
 
 -------- day 12 --------
 name, sellIn, quality
@@ -154,6 +178,8 @@ Backstage passes to a TAFKAL80ETC concert, 3, 41
 Backstage passes to a TAFKAL80ETC concert, -2, 0
 Backstage passes to a TAFKAL80ETC concert, -7, 0
 Conjured Mana Cake, -9, 0
+Backstage passes to a TAFKAL80ETC concert, -7, 0
+Aged Brie, -10, 50
 
 -------- day 13 --------
 name, sellIn, quality
@@ -166,6 +192,8 @@ Backstage passes to a TAFKAL80ETC concert, 2, 44
 Backstage passes to a TAFKAL80ETC concert, -3, 0
 Backstage passes to a TAFKAL80ETC concert, -8, 0
 Conjured Mana Cake, -10, 0
+Backstage passes to a TAFKAL80ETC concert, -8, 0
+Aged Brie, -11, 50
 
 -------- day 14 --------
 name, sellIn, quality
@@ -178,6 +206,8 @@ Backstage passes to a TAFKAL80ETC concert, 1, 47
 Backstage passes to a TAFKAL80ETC concert, -4, 0
 Backstage passes to a TAFKAL80ETC concert, -9, 0
 Conjured Mana Cake, -11, 0
+Backstage passes to a TAFKAL80ETC concert, -9, 0
+Aged Brie, -12, 50
 
 -------- day 15 --------
 name, sellIn, quality
@@ -190,6 +220,8 @@ Backstage passes to a TAFKAL80ETC concert, 0, 50
 Backstage passes to a TAFKAL80ETC concert, -5, 0
 Backstage passes to a TAFKAL80ETC concert, -10, 0
 Conjured Mana Cake, -12, 0
+Backstage passes to a TAFKAL80ETC concert, -10, 0
+Aged Brie, -13, 50
 
 -------- day 16 --------
 name, sellIn, quality
@@ -202,6 +234,8 @@ Backstage passes to a TAFKAL80ETC concert, -1, 0
 Backstage passes to a TAFKAL80ETC concert, -6, 0
 Backstage passes to a TAFKAL80ETC concert, -11, 0
 Conjured Mana Cake, -13, 0
+Backstage passes to a TAFKAL80ETC concert, -11, 0
+Aged Brie, -14, 50
 
 -------- day 17 --------
 name, sellIn, quality
@@ -214,6 +248,8 @@ Backstage passes to a TAFKAL80ETC concert, -2, 0
 Backstage passes to a TAFKAL80ETC concert, -7, 0
 Backstage passes to a TAFKAL80ETC concert, -12, 0
 Conjured Mana Cake, -14, 0
+Backstage passes to a TAFKAL80ETC concert, -12, 0
+Aged Brie, -15, 50
 
 -------- day 18 --------
 name, sellIn, quality
@@ -226,6 +262,8 @@ Backstage passes to a TAFKAL80ETC concert, -3, 0
 Backstage passes to a TAFKAL80ETC concert, -8, 0
 Backstage passes to a TAFKAL80ETC concert, -13, 0
 Conjured Mana Cake, -15, 0
+Backstage passes to a TAFKAL80ETC concert, -13, 0
+Aged Brie, -16, 50
 
 -------- day 19 --------
 name, sellIn, quality
@@ -238,4 +276,6 @@ Backstage passes to a TAFKAL80ETC concert, -4, 0
 Backstage passes to a TAFKAL80ETC concert, -9, 0
 Backstage passes to a TAFKAL80ETC concert, -14, 0
 Conjured Mana Cake, -16, 0
+Backstage passes to a TAFKAL80ETC concert, -14, 0
+Aged Brie, -17, 50
 
