@@ -19,9 +19,9 @@ spec =
       in actual `shouldBe` expected
 
     it "decreases quality double as fast when sell by date passed" $
-      let inventory = [Item "foo" 0 10]
+      let inventory = [Item "foo" 0 10, Item "foo" (-20) 10]
           actual = updateQuality inventory
-          expected = [Item "foo" (-1) 8]
+          expected = [Item "foo" (-1) 8, Item "foo" (-21) 8]
       in actual `shouldBe` expected
 
     it "Aged Brie increases in quality before sellIn day" $

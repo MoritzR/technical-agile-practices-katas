@@ -20,8 +20,9 @@ updateItemQuality (Item "Sulfuras, Hand of Ragnaros" sellIn quality) = quality
 updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality)
   = min (increaseBackStagePassQuality sellIn quality) 50
 
-updateItemQuality (Item name sellIn quality) = max (quality - 1) 0
-
+updateItemQuality (Item name sellIn quality)
+  | sellIn <= 0 = max (quality - 2) 0
+  | otherwise   = max (quality - 1) 0
 
 increaseBackStagePassQuality sellIn quality = quality + qualityIncrease
  where
@@ -57,6 +58,4 @@ updateQualityItem (Item "Sulfuras, Hand of Ragnaros" sellIn quality) =
 updateQualityItem (Item name sellIn quality) =
   let quality' = updateItemQuality (Item name sellIn quality)
       sellIn'  = sellIn - 1
-  in  if sellIn' < 0 && quality' > 0
-        then (Item name sellIn' (quality' - 1))
-        else (Item name sellIn' quality')
+  in  Item name sellIn' quality'
