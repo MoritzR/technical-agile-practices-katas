@@ -23,10 +23,9 @@ updateItemQuality (Item name sellIn quality) =
 
 increaseBackStagePassQuality sellIn quality =
   quality
-    + 1
     + (if sellIn < 11 && quality < 49
-        then 1 + (if sellIn < 6 && quality < 48 then 1 else 0)
-        else 0
+        then 2 + (if sellIn < 6 && quality < 48 then 1 else 0)
+        else 1
       )
 
 updateQuality :: GildedRose -> GildedRose
