@@ -12,8 +12,8 @@ instance Show Item where
 updateItemQuality :: Item -> Int
 
 updateItemQuality (Item "Aged Brie" sellIn quality)
-  | sellIn < 0 = min (quality + 2) 50
-  | otherwise  = min (quality + 1) 50
+  | sellIn <= 0 = min (quality + 2) 50
+  | otherwise   = min (quality + 1) 50
 
 updateItemQuality (Item "Sulfuras, Hand of Ragnaros" sellIn quality) = quality
 
