@@ -25,6 +25,7 @@ updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quali
     | fiveDaysBeforeConcert = quality + 3
     | tenDaysBeforeConcert  = quality + 2
     | otherwise             = quality + 1
+
   fiveDaysBeforeConcert = sellIn <= 5
   tenDaysBeforeConcert  = sellIn <= 10
   afterConcert          = sellIn <= 0
