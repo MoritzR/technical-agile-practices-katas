@@ -30,18 +30,15 @@ updateItemQuality (Item name sellIn quality)
   | sellIn <= 0 = max (quality - 2) 0
   | otherwise   = max (quality - 1) 0
 
+updateItemSellIn :: Item -> Int
+updateItemSellIn (Item name sellIn _)
+  | name == "Sulfuras, Hand of Ragnaros" = sellIn
+  | otherwise                            = sellIn - 1
 
 updateQuality :: GildedRose -> GildedRose
 updateQuality = map updateItem
 
-sellInAfterOneDay sellIn = sellIn - 1
-
-updateItem item@(Item name@"Sulfuras, Hand of Ragnaros" sellIn quality) =
-  let quality' = updateItemQuality item
-      sellIn'  = sellIn
-  in  Item name sellIn' quality'
-
 updateItem item@(Item name sellIn quality) =
   let quality' = updateItemQuality item
-      sellIn'  = sellInAfterOneDay sellIn
+      sellIn'  = updateItemSellIn item
   in  Item name sellIn' quality'
