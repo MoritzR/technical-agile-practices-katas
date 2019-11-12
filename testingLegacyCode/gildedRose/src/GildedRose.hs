@@ -31,29 +31,29 @@ updateBackStagePassQuality sellIn quality
   | otherwise                     = quality + 1
 
 updateQuality :: GildedRose -> GildedRose
-updateQuality = map updateQualityItem
+updateQuality = map updateItem
 
 
-updateQualityItem (Item "Aged Brie" sellIn quality) =
+updateItem (Item "Aged Brie" sellIn quality) =
   let name     = "Aged Brie"
       quality' = updateItemQuality (Item name sellIn quality)
       sellIn'  = sellIn - 1
   in  Item name sellIn' quality'
 
-updateQualityItem (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality)
+updateItem (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality)
   = let name     = "Backstage passes to a TAFKAL80ETC concert"
         quality' = updateItemQuality (Item name sellIn quality)
         sellIn'  = sellIn - 1
     in  Item name sellIn' quality'
 
-updateQualityItem (Item "Sulfuras, Hand of Ragnaros" sellIn quality) =
+updateItem (Item "Sulfuras, Hand of Ragnaros" sellIn quality) =
   let name     = "Sulfuras, Hand of Ragnaros"
       quality' = updateItemQuality (Item name sellIn quality)
       sellIn'  = sellIn
   in  (Item name sellIn' quality')
 
 
-updateQualityItem (Item name sellIn quality) =
+updateItem (Item name sellIn quality) =
   let quality' = updateItemQuality (Item name sellIn quality)
       sellIn'  = sellIn - 1
   in  Item name sellIn' quality'
