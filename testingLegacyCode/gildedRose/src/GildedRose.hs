@@ -35,24 +35,11 @@ updateQuality = map updateItem
 
 sellInAfterOneDay sellIn = sellIn -1
 
-updateItem item@(Item "Aged Brie" sellIn quality) =
-  let name     = "Aged Brie"
-      quality' = updateItemQuality item
-      sellIn'  = sellInAfterOneDay sellIn
-  in  Item name sellIn' quality'
-
-updateItem item@(Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality)
-  = let name     = "Backstage passes to a TAFKAL80ETC concert"
-        quality' = updateItemQuality item
-        sellIn'  = sellInAfterOneDay sellIn
-    in  Item name sellIn' quality'
-
 updateItem item@(Item "Sulfuras, Hand of Ragnaros" sellIn quality) =
   let name     = "Sulfuras, Hand of Ragnaros"
       quality' = updateItemQuality item
       sellIn'  = sellIn
   in  (Item name sellIn' quality')
-
 
 updateItem item@(Item name sellIn quality) =
   let quality' = updateItemQuality item
