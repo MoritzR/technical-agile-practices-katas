@@ -40,7 +40,7 @@ updateItem item@(Item "Sulfuras, Hand of Ragnaros" sellIn quality) =
   let name     = "Sulfuras, Hand of Ragnaros"
       quality' = updateItemQuality item
       sellIn'  = sellIn
-  in  (Item name sellIn' quality')
+  in  Item name sellIn' quality'
 
 updateItem item@(Item name sellIn quality) =
   let quality' = updateItemQuality item
