@@ -20,10 +20,14 @@ updateItemQuality (Item "Sulfuras, Hand of Ragnaros" sellIn quality) = quality
 updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality)
   = min (updateBackStagePassQuality sellIn quality) 50
  where
-  updateBackStagePassQuality sellIn quality | sellIn <= 0  = 0
-                                            | sellIn <= 5  = quality + 3
-                                            | sellIn <= 10 = quality + 2
-                                            | otherwise    = quality + 1
+  updateBackStagePassQuality sellIn quality
+    | afterConcert          = 0
+    | fiveDaysBeforeConcert = quality + 3
+    | tenDaysBeforeConcert  = quality + 2
+    | otherwise             = quality + 1
+  fiveDaysBeforeConcert = sellIn <= 5
+  tenDaysBeforeConcert  = sellIn <= 10
+  afterConcert          = sellIn <= 0
 
 updateItemQuality (Item name sellIn quality)
   | sellIn <= 0 = max (quality - 2) 0
