@@ -19,21 +19,22 @@ updateItemQuality (Item "Sulfuras, Hand of Ragnaros" sellIn quality) = quality
 
 updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality)
   = min (updateBackStagePassQuality sellIn quality) 50
+ where
+  updateBackStagePassQuality sellIn quality
+    | sellIn <= 0                   = 0
+    | sellIn <= 5 && quality <= 47  = quality + 3
+    | sellIn <= 10 && quality <= 48 = quality + 2
+    | otherwise                     = quality + 1
 
 updateItemQuality (Item name sellIn quality)
   | sellIn <= 0 = max (quality - 2) 0
   | otherwise   = max (quality - 1) 0
 
-updateBackStagePassQuality sellIn quality
-  | sellIn <= 0                   = 0
-  | sellIn <= 5 && quality <= 47  = quality + 3
-  | sellIn <= 10 && quality <= 48 = quality + 2
-  | otherwise                     = quality + 1
 
 updateQuality :: GildedRose -> GildedRose
 updateQuality = map updateItem
 
-sellInAfterOneDay sellIn = sellIn -1
+sellInAfterOneDay sellIn = sellIn - 1
 
 updateItem item@(Item "Sulfuras, Hand of Ragnaros" sellIn quality) =
   let name     = "Sulfuras, Hand of Ragnaros"
