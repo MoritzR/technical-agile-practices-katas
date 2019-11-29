@@ -18,22 +18,23 @@ updateItem item@(Item name sellIn quality) =
       sellIn'  = updateItemSellIn item
   in  Item name sellIn' quality'
 
-
 updateItemSellIn :: Item -> Int
 updateItemSellIn (Item name sellIn _)
   | name == "Sulfuras, Hand of Ragnaros" = sellIn
   | otherwise                            = sellIn - 1
 
-
 updateItemQuality :: Item -> Int
+updateItemQuality (Item name sellIn quality)
+  | name == "Aged Brie" = updateQualityAgedBrie sellIn quality
+  | name == "Sulfuras, Hand of Ragnaros" = quality
+  | name == "Backstage passes to a TAFKAL80ETC concert" = updateQualityBackstagePass sellIn quality
+  | otherwise = updateQualityDefault sellIn quality
 
-updateItemQuality (Item "Aged Brie" sellIn quality)
+updateQualityAgedBrie sellIn quality
   | sellIn <= 0 = min (quality + 2) 50
   | otherwise   = min (quality + 1) 50
 
-updateItemQuality (Item "Sulfuras, Hand of Ragnaros" sellIn quality) = quality
-
-updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quality)
+updateQualityBackstagePass sellIn quality
   = min (updateBackStagePassQuality sellIn quality) 50
  where
   updateBackStagePassQuality sellIn quality
@@ -46,6 +47,6 @@ updateItemQuality (Item "Backstage passes to a TAFKAL80ETC concert" sellIn quali
   tenDaysBeforeConcert  = sellIn <= 10
   afterConcert          = sellIn <= 0
 
-updateItemQuality (Item name sellIn quality)
+updateQualityDefault sellIn quality
   | sellIn <= 0 = max (quality - 2) 0
   | otherwise   = max (quality - 1) 0
