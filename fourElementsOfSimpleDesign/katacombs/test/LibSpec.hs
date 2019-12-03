@@ -1,9 +1,10 @@
 module LibSpec (spec) where
 
 import Test.Hspec
+import Lib
 
 spec :: Spec
 spec =
-  describe "equality" $ do
-    it "should equal 3 and 3" $
-        3 `shouldBe` 3
+  describe "parse go directions" $ do
+    it "should parse 'go n'" $
+        Lib.parse "go n" `shouldBe` Go North
