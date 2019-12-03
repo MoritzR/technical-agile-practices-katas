@@ -2,15 +2,19 @@ module LibSpec (spec) where
 
 import Test.Hspec
 import Lib
+import Data.Maybe (fromJust)
 
 spec :: Spec
-spec =
+spec = do
   describe "parse go directions" $ do
+    let parseJust = fromJust . parse
     it "should parse 'go n'" $
-        Lib.parse "go n" `shouldBe` Go North
+      parseJust "go n" `shouldBe` Go North
     it "should parse 'go s'" $
-        Lib.parse "go s" `shouldBe` Go South
+      parseJust "go s" `shouldBe` Go South
     it "should parse 'go w'" $
-        Lib.parse "go w" `shouldBe` Go West
+      parseJust "go w" `shouldBe` Go West
     it "should parse 'go e'" $
-        Lib.parse "go e" `shouldBe` Go East
+      parseJust "go e" `shouldBe` Go East
+  it "should return Nothing for an unkown command" $
+    parse "I want to be a butterfly" `shouldBe` Nothing
