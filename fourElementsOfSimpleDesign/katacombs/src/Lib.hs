@@ -1,18 +1,35 @@
 module Lib where
 
 import Data.List (isPrefixOf)
+import Text.ParserCombinators.ReadP (ReadP, choice, readP_to_S, pfail, char, string)
+import Data.Maybe (listToMaybe)
 
 game :: IO ()
 game = putStrLn "Hello World"
 
 parse :: String -> Maybe Command
-parse "go n" = Just $ Go North
-parse "go s" = Just $ Go South
-parse "go w" = Just $ Go West
-parse "go e" = Just $ Go East
-parse s
-    | "look" `isPrefixOf` s  = Just $ Look North
-    | otherwise = Nothing
+parse = listToMaybe . map fst . readP_to_S (choice [goCommand, lookCommand])
+
+goCommand :: ReadP Command
+goCommand = do
+    string "go "
+    d <- direction
+    return $ Go d
+
+lookCommand :: ReadP Command
+lookCommand = do
+    string "look"
+    return $ Look North
+
+direction :: ReadP Direction
+direction = do
+    d <- choice [char 'n', char 's', char 'w', char 'e']
+    case d of
+        'n' -> return North
+        's' -> return South
+        'w' -> return West
+        'e' -> return East
+        _ -> pfail
 
 data Command = Go Direction
     | Look Direction
