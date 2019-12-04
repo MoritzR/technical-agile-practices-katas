@@ -10,7 +10,8 @@ spec = do
     describe "successfully" $ do
       let parseJust = fromJust . parse
           test (input, expectedCommand)
-            = it ("should parse " ++ show input) $ parseJust input `shouldBe` expectedCommand
+            = it ("should parse " ++ show input) $
+                parseJust input `shouldBe` expectedCommand
           testAll = foldl1 (>>) . map test
           examples = [
             ("go n", Go North),
@@ -33,7 +34,8 @@ spec = do
         parse "asjdoijoqwrn" `shouldBe` Nothing
       describe "for commands that have a valid command as prefix" $ do
         let test input
-              = it (show input) $ parse input `shouldBe` Nothing
+              = it (show input) $
+                  parse input `shouldBe` Nothing
             testAll = foldl1 (>>) . map test
             examples = [
               "go not north",
