@@ -21,7 +21,7 @@ parse = listToMaybe . map fst . readP_to_S command
 
 command :: ReadP Command
 command = do
-    c <- choice [goCommand, lookCommand]
+    c <- choice [goCommand, lookCommand, lookAtCommand]
     Parser.eof
     return c
 
@@ -37,6 +37,12 @@ lookCommand = do
     d <- direction
     return $ Look d
 
+lookAtCommand :: ReadP Command
+lookAtCommand = do
+    string "look "
+    item <- Parser.many1 Parser.get
+    return $ LookAt (Itemname item)
+
 direction :: ReadP Direction
 direction = do
     d <- Parser.get
@@ -49,6 +55,11 @@ direction = do
 
 data Command = Go Direction
     | Look Direction
+    | LookAt Itemname
     deriving (Show, Eq)
+
 data Direction = North | South | West | East
+    deriving (Show, Eq)
+
+newtype Itemname = Itemname String
     deriving (Show, Eq)

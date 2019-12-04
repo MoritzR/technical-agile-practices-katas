@@ -21,7 +21,10 @@ spec = do
             ("look n", Look North),
             ("look s", Look South),
             ("look w", Look West),
-            ("look e", Look East)]
+            ("look e", Look East),
+
+            ("look keys", LookAt (Itemname "keys")),
+            ("look door", LookAt (Itemname "door"))]
 
       testAll examples
 
@@ -35,6 +38,6 @@ spec = do
             examples = [
               "go not north",
               "go somewhere else",
-              "look whereever",
-              "look elsewhere"]
+              "go whereever",
+              "go elsewhere"]
         testAll examples
