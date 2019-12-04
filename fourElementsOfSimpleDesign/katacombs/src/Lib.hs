@@ -29,7 +29,7 @@ direction = do
         's' -> return South
         'w' -> return West
         'e' -> return East
-        _ -> pfail
+        _   -> pfail
 
 data Command = Go Direction
     | Look Direction
