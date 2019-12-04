@@ -17,7 +17,13 @@ game = do
         else game
 
 parse :: String -> Maybe Command
-parse = listToMaybe . map fst . readP_to_S (choice [goCommand, lookCommand])
+parse = listToMaybe . map fst . readP_to_S command
+
+command :: ReadP Command
+command = do
+    c <- choice [goCommand, lookCommand]
+    Parser.eof
+    return c
 
 goCommand :: ReadP Command
 goCommand = do
