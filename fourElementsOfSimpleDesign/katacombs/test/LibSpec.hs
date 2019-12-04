@@ -31,7 +31,7 @@ spec = do
     describe "failing to parse returns 'Nothing'" $ do
       it "for input 'asjdoijoqwrn'" $
         parse "asjdoijoqwrn" `shouldBe` Nothing
-      describe "for commands start have a valid command as prefix" $ do
+      describe "for commands that have a valid command as prefix" $ do
         let test input
               = it (show input) $ parse input `shouldBe` Nothing
             testAll = foldl1 (>>) . map test
