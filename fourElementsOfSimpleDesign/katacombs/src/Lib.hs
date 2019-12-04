@@ -2,19 +2,25 @@ module Lib where
 
 import Data.List (isPrefixOf)
 import Text.ParserCombinators.ReadP (ReadP, choice, readP_to_S, string)
-import qualified Text.ParserCombinators.ReadP as Parser 
+import qualified Text.ParserCombinators.ReadP as Parser
 import Data.Maybe (listToMaybe)
+import GameState (GameState)
+import qualified GameState as GS
 
-game :: IO ()
-game = do
-    putStrLn "<location name>"
-    putStrLn "<location description>"
+startGame :: IO ()
+startGame = game GS.initialGameState
+
+game :: GameState -> IO ()
+game gamestate = do
+    let location = GS.currentLocation gamestate
+    putStrLn $ GS.title location
+    putStrLn $ GS.description location
     putStr "> "
     input <- getLine
     putStrLn $ "You want to " ++ show (parse input)
     if input=="quit"
         then return ()
-        else game
+        else game gamestate
 
 parse :: String -> Maybe Command
 parse = listToMaybe . map fst . readP_to_S command
