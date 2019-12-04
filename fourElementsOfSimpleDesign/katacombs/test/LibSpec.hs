@@ -17,7 +17,10 @@ spec = do
           ("go w", Go West),
           ("go e", Go East),
 
-          ("look n", Look North)]
+          ("look n", Look North),
+          ("look s", Look South),
+          ("look w", Look West),
+          ("look e", Look East)]
 
     testAll examples
 

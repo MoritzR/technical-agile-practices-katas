@@ -18,8 +18,9 @@ goCommand = do
 
 lookCommand :: ReadP Command
 lookCommand = do
-    string "look"
-    return $ Look North
+    string "look "
+    d <- direction
+    return $ Look d
 
 direction :: ReadP Direction
 direction = do
