@@ -6,7 +6,15 @@ import qualified Text.ParserCombinators.ReadP as Parser
 import Data.Maybe (listToMaybe)
 
 game :: IO ()
-game = putStrLn "Hello World"
+game = do
+    putStrLn "<location name>"
+    putStrLn "<location description>"
+    putStr "> "
+    input <- getLine
+    putStrLn $ "You want to " ++ show (parse input)
+    if input=="quit"
+        then return ()
+        else game
 
 parse :: String -> Maybe Command
 parse = listToMaybe . map fst . readP_to_S (choice [goCommand, lookCommand])
