@@ -1,7 +1,8 @@
 module Lib where
 
 import Data.List (isPrefixOf)
-import Text.ParserCombinators.ReadP (ReadP, choice, readP_to_S, pfail, char, string)
+import Text.ParserCombinators.ReadP (ReadP, choice, readP_to_S, string)
+import qualified Text.ParserCombinators.ReadP as Parser 
 import Data.Maybe (listToMaybe)
 
 game :: IO ()
@@ -24,13 +25,13 @@ lookCommand = do
 
 direction :: ReadP Direction
 direction = do
-    d <- choice [char 'n', char 's', char 'w', char 'e']
+    d <- Parser.get
     case d of
         'n' -> return North
         's' -> return South
         'w' -> return West
         'e' -> return East
-        _   -> pfail
+        _   -> Parser.pfail
 
 data Command = Go Direction
     | Look Direction
