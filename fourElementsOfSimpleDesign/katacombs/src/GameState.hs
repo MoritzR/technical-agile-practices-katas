@@ -7,15 +7,21 @@ module GameState
     , Itemname (..)
     , Coordinate
     , initialGameState
+    , gameMap
     , doCommand
     , getPlayerLocation) where
 
 import Data.Map (Map)
 import qualified Data.Map as Map
 
-doCommand :: Command -> GameState -> GameState
-doCommand (Go toDirection) state = GameState {
-    playerAt = moveTo toDirection (playerAt state) }
+doCommand :: GameMap -> Command -> GameState -> (MessageToPlayer, GameState)
+doCommand gameMap (Go toDirection) state =
+    ( title newLocation ++ "\n" ++ description newLocation
+    , GameState { playerAt = newCoordinate }
+    )
+        where   newCoordinate   = moveTo toDirection (playerAt state)
+                newState        = GameState { playerAt = newCoordinate }
+                newLocation     = getPlayerLocation gameMap newState
 
 getPlayerLocation :: GameMap -> GameState -> Location
 getPlayerLocation map state = case Map.lookup (playerAt state) map of
@@ -28,6 +34,8 @@ moveTo direction (x, y) = case direction of
     South   -> (x, y-1)
     East    -> (x+1, y)
     West    -> (x-1, y)
+
+type MessageToPlayer = String
 
 data GameState = GameState {
     playerAt :: Coordinate
@@ -61,6 +69,7 @@ initialGameState = GameState {
     playerAt = (0, 0)
 }
 
+gameMap :: GameMap
 gameMap = Map.fromList
     [ ((0, 0), Location {
             title = "Jail Cell",

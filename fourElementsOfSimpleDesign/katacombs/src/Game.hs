@@ -1,6 +1,6 @@
 module Game where
 
-import GameState (GameState)
+import GameState (GameState, gameMap)
 import qualified GameState as GS
 import qualified CommandParser as Commands
 
@@ -20,5 +20,8 @@ game state = do
         else continueWithUpdatedState commandFromPlayer state
     
 continueWithUpdatedState playerCommand state = case playerCommand of
-    Just command    -> game $ GS.doCommand command state
+    Just command    -> do
+        let (messageToPlayer, newState) = GS.doCommand gameMap command state
+        putStrLn messageToPlayer
+        game $ newState
     Nothing         -> game state 

@@ -9,7 +9,7 @@ spec = do
     describe "commands" $ do
         describe "go" $ do
             let center = Location "center" ""
-                east = Location "east" ""
+                east = Location "east" "the location to the east"
                 west = Location "west" ""
                 north = Location "north" ""
                 south = Location "south" ""
@@ -21,16 +21,22 @@ spec = do
                     , ((0, -1), south)
                     ]
                 state = GameState { playerAt = (0, 0) }
+                stateAfterCommand command = snd $ doCommand gameMap command state
+                messageAfterCommand command = fst $ doCommand gameMap command state
     
             it "should move to the north" $ do
-                let nextState = doCommand (Go North) state 
+                let nextState = stateAfterCommand (Go North) 
                 getPlayerLocation gameMap nextState `shouldBe` north
             it "should move to the south" $ do
-                let nextState = doCommand (Go South) state 
+                let nextState = stateAfterCommand (Go South) 
                 getPlayerLocation gameMap nextState `shouldBe` south
             it "should move to the east" $ do
-                let nextState = doCommand (Go East) state 
+                let nextState = stateAfterCommand (Go East) 
                 getPlayerLocation gameMap nextState `shouldBe` east
             it "should move to the west" $ do
-                let nextState = doCommand (Go West) state 
+                let nextState = stateAfterCommand (Go West) 
                 getPlayerLocation gameMap nextState `shouldBe` west
+            
+            it "should also return title and description of the new location" $ do
+                let message = messageAfterCommand (Go East) 
+                message `shouldBe` "east\nthe location to the east"
