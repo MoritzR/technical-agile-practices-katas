@@ -1,14 +1,31 @@
 module GameState 
     ( GameState (..)
     , Location (..)
+    , GameMap (..)
     , Command (..)
     , Direction (..)
     , Itemname (..)
-    , initialGameState) where
+    , Coordinate
+    , initialGameState
+    , doCommand
+    , getPlayerLocation) where
+
+import Data.Map (Map)
+import qualified Data.Map as Map
+
+doCommand :: Command -> GameState -> GameState
+doCommand (Go toDirection) state = state
+
+getPlayerLocation :: GameMap -> GameState -> Location
+getPlayerLocation map state = Location "north" ""
 
 data GameState = GameState {
-    currentLocation :: Location
+    playerAt :: Coordinate
 }
+
+type GameMap = Map Coordinate Location
+
+type Coordinate = (Int, Int)
 
 data Location = Location {
     title :: String,
@@ -29,11 +46,14 @@ data Direction = North | South | West | East
 newtype Itemname = Itemname String
     deriving (Show, Eq)
 
-initalLocation = Location {
-    title = "Jail Cell",
-    description = "You are standing in a jail cell. A faint light reaches you from a small shaft in the ceiling."
-}
 
 initialGameState = GameState {
-    currentLocation = initalLocation
+    playerAt = (0, 0)
 }
+
+gameMap = Map.fromList
+    [ ((0, 0), Location {
+            title = "Jail Cell",
+            description = "You are standing in a jail cell. A faint light reaches you from a small shaft in the ceiling."
+        })
+    ]
