@@ -17,7 +17,7 @@ import qualified Data.Map as Map
 doCommand :: GameMap -> Command -> GameState -> (MessageToPlayer, GameState)
 doCommand gameMap (Go toDirection) state =
     ( title newLocation ++ "\n" ++ description newLocation
-    , GameState { playerAt = newCoordinate }
+    , newState
     )
         where   newCoordinate   = moveTo toDirection (playerAt state)
                 newState        = GameState { playerAt = newCoordinate }
