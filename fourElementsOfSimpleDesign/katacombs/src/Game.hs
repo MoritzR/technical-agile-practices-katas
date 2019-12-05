@@ -10,13 +10,15 @@ startGame = do
     game GS.initialGameState
 
 game :: GameState -> IO ()
-game gameState = do
+game state = do
     putStr "> "
     input <- getLine
     let commandFromPlayer = Commands.parse input
     putStrLn $ "You want to " ++ show commandFromPlayer
     if input=="quit"
         then return ()
-        else case commandFromPlayer of
-            Just command    -> game $ GS.doCommand command gameState
-            Nothing         -> game gameState
+        else continueWithUpdatedState commandFromPlayer state
+    
+continueWithUpdatedState playerCommand state = case playerCommand of
+    Just command    -> game $ GS.doCommand command state
+    Nothing         -> game state 
