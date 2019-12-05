@@ -1,7 +1,6 @@
 module CommandParserSpec (spec) where
 
 import Test.Hspec
-import Lib
 import Data.Maybe (fromJust)
 import GameState (Command (..), Direction (..), Itemname (..))
 import CommandParser

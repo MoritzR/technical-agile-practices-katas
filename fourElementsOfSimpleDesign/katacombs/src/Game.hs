@@ -1,4 +1,4 @@
-module Lib where
+module Game where
 
 import GameState (GameState)
 import qualified GameState as GS
