@@ -1,4 +1,10 @@
-module GameState (GameState, Location, initialGameState, title, description, currentLocation) where
+module GameState 
+    ( GameState (..)
+    , Location (..)
+    , Command (..)
+    , Direction (..)
+    , Itemname (..)
+    , initialGameState) where
 
 data GameState = GameState {
     currentLocation :: Location
@@ -7,7 +13,21 @@ data GameState = GameState {
 data Location = Location {
     title :: String,
     description :: String
-}
+} deriving (Eq)
+
+instance Show Location where
+    show l = "Location '" ++ title l ++ "'"
+
+data Command = Go Direction
+    | Look Direction
+    | LookAt Itemname
+    deriving (Show, Eq)
+
+data Direction = North | South | West | East
+    deriving (Show, Eq)
+
+newtype Itemname = Itemname String
+    deriving (Show, Eq)
 
 initalLocation = Location {
     title = "Jail Cell",

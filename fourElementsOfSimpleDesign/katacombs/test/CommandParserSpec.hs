@@ -1,8 +1,10 @@
-module LibSpec (spec) where
+module CommandParserSpec (spec) where
 
 import Test.Hspec
 import Lib
 import Data.Maybe (fromJust)
+import GameState (Command (..), Direction (..), Itemname (..))
+import CommandParser
 
 spec :: Spec
 spec = do
