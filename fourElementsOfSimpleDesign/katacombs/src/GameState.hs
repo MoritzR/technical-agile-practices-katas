@@ -24,8 +24,10 @@ getPlayerLocation map state = case Map.lookup (playerAt state) map of
 
 moveTo :: Direction -> Coordinate -> Coordinate
 moveTo direction (x, y) = case direction of
-    North -> (x, y+1)
-    South -> (x, y-1)
+    North   -> (x, y+1)
+    South   -> (x, y-1)
+    East    -> (x+1, y)
+    West    -> (x-1, y)
 
 data GameState = GameState {
     playerAt :: Coordinate
