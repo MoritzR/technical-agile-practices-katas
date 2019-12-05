@@ -5,13 +5,18 @@ import qualified GameState as GS
 import qualified CommandParser as Commands
 
 startGame :: IO ()
-startGame = game GS.initialGameState
+startGame = do
+    putStrLn "Katacombs of Shoreditch"
+    game GS.initialGameState
 
 game :: GameState -> IO ()
-game gamestate = do
+game gameState = do
     putStr "> "
     input <- getLine
-    putStrLn $ "You want to " ++ show (Commands.parse input)
+    let commandFromPlayer = Commands.parse input
+    putStrLn $ "You want to " ++ show commandFromPlayer
     if input=="quit"
         then return ()
-        else game gamestate
+        else case commandFromPlayer of
+            Just command    -> game $ GS.doCommand command gameState
+            Nothing         -> game gameState
