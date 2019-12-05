@@ -25,3 +25,6 @@ spec = do
             it "should move to the north" $ do
                 let nextState = doCommand (Go North) state 
                 getPlayerLocation gameMap nextState `shouldBe` north
+            it "should move to the south" $ do
+                let nextState = doCommand (Go South) state 
+                getPlayerLocation gameMap nextState `shouldBe` south

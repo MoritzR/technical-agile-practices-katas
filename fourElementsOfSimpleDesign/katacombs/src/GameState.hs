@@ -14,10 +14,18 @@ import Data.Map (Map)
 import qualified Data.Map as Map
 
 doCommand :: Command -> GameState -> GameState
-doCommand (Go toDirection) state = state
+doCommand (Go toDirection) state = GameState {
+    playerAt = moveTo toDirection (playerAt state) }
 
 getPlayerLocation :: GameMap -> GameState -> Location
-getPlayerLocation map state = Location "north" ""
+getPlayerLocation map state = case Map.lookup (playerAt state) map of
+    Just location   -> location
+    Nothing         -> Location "Limbo" "you shouldn't be here" -- TODO make this impossible
+
+moveTo :: Direction -> Coordinate -> Coordinate
+moveTo direction (x, y) = case direction of
+    North -> (x, y+1)
+    South -> (x, y-1)
 
 data GameState = GameState {
     playerAt :: Coordinate
