@@ -22,6 +22,8 @@ doCommand gameMap (Go toDirection) state =
         where   newCoordinate   = moveTo toDirection (playerAt state)
                 newState        = GameState { playerAt = newCoordinate }
                 newLocation     = getPlayerLocation gameMap newState
+doCommand gameMap (Look toDirection) state =
+    ("You see the North", state)
 
 getPlayerLocation :: GameMap -> GameState -> Location
 getPlayerLocation map state = case Map.lookup (playerAt state) map of
