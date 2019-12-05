@@ -42,6 +42,9 @@ spec = do
                 message `shouldBe` "east\nthe location to the east"
 
         describe "look" $ do
-            it "should display a message after looking in a direction" $ do
+            it "should display a message after looking north" $ do
                 let message = messageAfterCommand (Look North)
                 message `shouldBe` "You see the North"
+            it "should display a message after looking south" $ do
+                let message = messageAfterCommand (Look South)
+                message `shouldBe` "You see the South"
