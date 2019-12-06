@@ -19,8 +19,7 @@ doCommand gameMap (Go toDirection) state =
     ( title newLocation ++ "\n" ++ description newLocation
     , newState
     )
-        where   newCoordinate   = moveTo toDirection (playerAt state)
-                newState        = GameState { playerAt = newCoordinate }
+        where   newState        = GameState { playerAt = moveTo toDirection (playerAt state) }
                 newLocation     = getPlayerLocation gameMap newState
 doCommand gameMap (Look toDirection) state =
     ("You see the " ++ show toDirection, state)
