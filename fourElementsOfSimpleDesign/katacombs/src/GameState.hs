@@ -76,4 +76,8 @@ gameMap = Map.fromList
             title = "Jail Cell",
             description = "You are standing in a jail cell. A faint light reaches you from a small shaft in the ceiling."
         })
+    , ((0, 1), Location {
+        title = "Corridor",
+        description = "A long corridor, with cells to each side."
+        })
     ]
