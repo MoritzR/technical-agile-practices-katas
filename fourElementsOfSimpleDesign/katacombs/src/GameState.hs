@@ -23,6 +23,8 @@ doCommand gameMap (Go toDirection) state =
                 newLocation     = getPlayerLocation gameMap newState
 doCommand gameMap (Look toDirection) state =
     ("You see the " ++ show toDirection, state)
+doCommand gameMap (LookAt (Itemname name)) state =
+    ("You see the " ++ name, state)
 
 getPlayerLocation :: GameMap -> GameState -> Location
 getPlayerLocation map state = case Map.lookup (playerAt state) map of

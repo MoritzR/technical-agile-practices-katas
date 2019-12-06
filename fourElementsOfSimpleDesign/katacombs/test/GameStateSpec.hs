@@ -48,3 +48,7 @@ spec = do
             it "should display a message after looking south" $ do
                 let message = messageAfterCommand (Look South)
                 message `shouldBe` "You see the South"
+        describe "lookAt" $ do
+            it "should display a message after looking at an item" $ do
+                let message = messageAfterCommand (LookAt $ Itemname "keys")
+                message `shouldBe` "You see the keys"
