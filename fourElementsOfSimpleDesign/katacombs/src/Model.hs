@@ -12,6 +12,7 @@ type GameMap = Map Coordinate Location
 data Command = Go Direction
     | Look Direction
     | LookAt ItemName
+    | Take ItemName
     deriving (Show, Eq)
 
 data Location = Location {
