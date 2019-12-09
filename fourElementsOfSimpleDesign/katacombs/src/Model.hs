@@ -25,7 +25,18 @@ data Direction = North | South | West | East
 
 type Coordinate = (Int, Int)
 
+data Item = Item {
+    itemName :: ItemName,
+    itemDescription :: String
+}
+instance Show Item where
+    show item = show $ itemName item
+instance Eq Item where
+    itemA == itemB = itemName itemA == itemName itemB
+instance Ord Item where
+    compare itemA itemB = compare (itemName itemA) (itemName itemB)
+
 newtype ItemName = ItemName String
     deriving (Show, Eq, Ord)
 
-type ItemLocations = Map ItemName Coordinate
+type ItemLocations = Map Item Coordinate

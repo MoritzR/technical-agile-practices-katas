@@ -6,6 +6,7 @@ module GameState
 
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Data.Maybe (listToMaybe, fromMaybe)
 import Model
 
 doCommand :: GameMap -> Command -> GameState -> (MessageToPlayer, GameState)
@@ -19,8 +20,9 @@ doCommand gameMap (Go toDirection) state =
                 newLocation     = getPlayerLocation gameMap newState
 doCommand gameMap (Look toDirection) state =
     ("You see the " ++ show toDirection, state)
-doCommand gameMap (LookAt (ItemName name)) state =
-    ("You see the " ++ name, state)
+doCommand gameMap (LookAt nameOfItem) state =
+    ( (fromMaybe ("There is no item " ++ show nameOfItem) . listToMaybe . map (\item -> itemDescription item) . filter (\item -> itemName item == nameOfItem) . Map.keys . Map.filter ((==) (playerAt state))) (items state)
+    , state)
 
 getPlayerLocation :: GameMap -> GameState -> Location
 getPlayerLocation map state = case Map.lookup (playerAt state) map of
@@ -36,15 +38,19 @@ moveTo direction (x, y) = case direction of
 
 type MessageToPlayer = String
 
-displayItemsAtLocation :: [ItemName] -> String
-displayItemsAtLocation itemnames
-    | names == []       = ""
+displayItemsAtLocation :: [Item] -> String
+displayItemsAtLocation items
+    | items == []       = ""
     | otherwise         = "\nItems in the location: " ++ unwords names
-        where names = map (\(ItemName name) -> "'" ++ name ++ "'") itemnames
+        where names = map (\(ItemName name) -> "'" ++ name ++ "'") . map itemName $ items
 
 initialGameState = GameState {
     playerAt = (0, 0),
-    items = Map.fromList [(ItemName "rusted key", (0, 0))]
+    items = Map.fromList
+        [   (Item {
+                itemName = ItemName "rusted key",
+                itemDescription = "A rusted key, they key of this" }
+            , (0, 0))]
 }
 
 gameMap :: GameMap
