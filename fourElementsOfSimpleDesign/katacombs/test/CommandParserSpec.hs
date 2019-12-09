@@ -25,8 +25,8 @@ spec = do
             ("look w", Look West),
             ("look e", Look East),
 
-            ("look keys", LookAt (Itemname "keys")),
-            ("look door", LookAt (Itemname "door"))]
+            ("look keys", LookAt (ItemName "keys")),
+            ("look door", LookAt (ItemName "door"))]
 
       testAll examples
 

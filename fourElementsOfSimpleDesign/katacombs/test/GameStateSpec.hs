@@ -21,8 +21,8 @@ spec = do
                 , ((0, -1), south)
                 ]
             items = Map.fromList
-                [ (Itemname "a golden statue", (0, 1))
-                , (Itemname "a silver key", (0, 1))]
+                [ (ItemName "a golden statue", (0, 1))
+                , (ItemName "a silver key", (0, 1))]
             state = GameState { playerAt = (0, 0), items = items }
             stateAfterCommand command = snd $ doCommand gameMap command state
             messageAfterCommand command = fst $ doCommand gameMap command state
@@ -57,5 +57,5 @@ spec = do
                 message `shouldBe` "You see the South"
         describe "lookAt" $ do
             it "should display a message after looking at an item" $ do
-                let message = messageAfterCommand (LookAt $ Itemname "keys")
+                let message = messageAfterCommand (LookAt $ ItemName "keys")
                 message `shouldBe` "You see the keys"

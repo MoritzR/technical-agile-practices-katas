@@ -11,7 +11,7 @@ type GameMap = Map Coordinate Location
 
 data Command = Go Direction
     | Look Direction
-    | LookAt Itemname
+    | LookAt ItemName
     deriving (Show, Eq)
 
 data Location = Location {
@@ -25,7 +25,7 @@ data Direction = North | South | West | East
 
 type Coordinate = (Int, Int)
 
-newtype Itemname = Itemname String
+newtype ItemName = ItemName String
     deriving (Show, Eq, Ord)
 
-type ItemLocations = Map Itemname Coordinate
+type ItemLocations = Map ItemName Coordinate

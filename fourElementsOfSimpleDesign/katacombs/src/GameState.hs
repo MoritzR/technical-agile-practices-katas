@@ -19,7 +19,7 @@ doCommand gameMap (Go toDirection) state =
                 newLocation     = getPlayerLocation gameMap newState
 doCommand gameMap (Look toDirection) state =
     ("You see the " ++ show toDirection, state)
-doCommand gameMap (LookAt (Itemname name)) state =
+doCommand gameMap (LookAt (ItemName name)) state =
     ("You see the " ++ name, state)
 
 getPlayerLocation :: GameMap -> GameState -> Location
@@ -36,15 +36,15 @@ moveTo direction (x, y) = case direction of
 
 type MessageToPlayer = String
 
-displayItemsAtLocation :: [Itemname] -> String
-displayItemsAtLocation itemNames
+displayItemsAtLocation :: [ItemName] -> String
+displayItemsAtLocation itemnames
     | names == []       = ""
     | otherwise         = "\nItems in the location: " ++ unwords names
-        where names = map (\(Itemname name) -> "'" ++ name ++ "'") itemNames
+        where names = map (\(ItemName name) -> "'" ++ name ++ "'") itemnames
 
 initialGameState = GameState {
     playerAt = (0, 0),
-    items = Map.fromList [(Itemname "rusted key", (0, 0))]
+    items = Map.fromList [(ItemName "rusted key", (0, 0))]
 }
 
 gameMap :: GameMap

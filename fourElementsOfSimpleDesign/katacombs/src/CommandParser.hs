@@ -30,7 +30,7 @@ lookAtCommand :: ReadP Command
 lookAtCommand = do
     string "look "
     item <- Parser.many1 Parser.get
-    return $ LookAt (Itemname item)
+    return $ LookAt (ItemName item)
 
 direction :: ReadP Direction
 direction = do
