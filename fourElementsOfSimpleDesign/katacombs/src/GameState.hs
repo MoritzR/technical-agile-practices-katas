@@ -56,7 +56,7 @@ initialGameState = GameState {
     items = Map.fromList
         [   (Item {
                 itemName = ItemName "rusted key",
-                itemDescription = "A rusted key, they key of this" }
+                itemDescription = "A rusted key, the head of this key resembles a horse." }
             , (0, 0))]
 }
 
