@@ -2,7 +2,8 @@ module Game where
 
 import Model (GameState)
 import qualified GameState as GS
-import qualified CommandParser as Commands
+import qualified CommandParser as Parser
+import qualified Commands
 
 startGame :: IO ()
 startGame = do
@@ -13,7 +14,7 @@ game :: GameState -> IO ()
 game state = do
     putStr "> "
     input <- getLine
-    let commandFromPlayer = Commands.parse input
+    let commandFromPlayer = Parser.parse input
     putStrLn $ "You want to " ++ show commandFromPlayer
     if input=="quit"
         then return ()
@@ -21,7 +22,7 @@ game state = do
     
 continueWithUpdatedState playerCommand state = case playerCommand of
     Just command    -> do
-        let (messageToPlayer, newState) = GS.doCommand GS.gameMap command state
+        let (messageToPlayer, newState) = Commands.doCommand GS.gameMap command state
         putStrLn messageToPlayer
         game $ newState
     Nothing         -> game state 
