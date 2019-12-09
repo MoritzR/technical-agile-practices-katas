@@ -7,8 +7,6 @@ import Data.Maybe (listToMaybe, fromMaybe)
 import Data.Function ((&))
 import Model
 
-
-
 doCommand :: GameMap -> Command -> GameState -> (MessageToPlayer, GameState)
 doCommand gameMap (Go toDirection) state =
     ( title newLocation ++ "\n" ++ description newLocation
