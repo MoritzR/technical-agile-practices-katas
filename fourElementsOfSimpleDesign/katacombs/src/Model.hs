@@ -38,6 +38,8 @@ instance Ord Item where
     compare itemA itemB = compare (itemName itemA) (itemName itemB)
 
 newtype ItemName = ItemName String
-    deriving (Show, Eq, Ord)
+    deriving (Eq, Ord)
+instance Show ItemName where
+    show (ItemName name) = name
 
 type ItemLocations = Map Item Coordinate

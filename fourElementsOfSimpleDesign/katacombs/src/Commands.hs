@@ -27,6 +27,9 @@ doCommand gameMap (LookAt nameOfItem) state =
         & listToMaybe
         & fromMaybe ("There is no item " ++ show nameOfItem)
     , state)
+doCommand gameMap (Take toDirection) state =
+    ("You picked up " ++ show toDirection, state)
+
 
 getPlayerLocation :: GameMap -> GameState -> Location
 getPlayerLocation map state = case Map.lookup (playerAt state) map of
