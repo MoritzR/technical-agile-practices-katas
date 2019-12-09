@@ -17,9 +17,11 @@ import qualified Data.Map as Map
 doCommand :: GameMap -> Command -> GameState -> (MessageToPlayer, GameState)
 doCommand gameMap (Go toDirection) state =
     ( title newLocation ++ "\n" ++ description newLocation
+        ++ displayItemsAtLocation (Map.keys (Map.filter ((==) newCoordinate) (items state)))
     , newState
     )
-        where   newState        = GameState { playerAt = moveTo toDirection (playerAt state) }
+        where   newCoordinate   = moveTo toDirection (playerAt state)
+                newState        = state { playerAt = newCoordinate }
                 newLocation     = getPlayerLocation gameMap newState
 doCommand gameMap (Look toDirection) state =
     ("You see the " ++ show toDirection, state)
@@ -41,8 +43,17 @@ moveTo direction (x, y) = case direction of
 type MessageToPlayer = String
 
 data GameState = GameState {
-    playerAt :: Coordinate
+    playerAt :: Coordinate,
+    items :: ItemLocations
 }
+
+type ItemLocations = Map Itemname Coordinate
+
+displayItemsAtLocation :: [Itemname] -> String
+displayItemsAtLocation itemNames
+    | names == []       = ""
+    | otherwise         = "\nItems in the location: " ++ unwords names
+        where names = map (\(Itemname name) -> "'" ++ name ++ "'") itemNames
 
 type GameMap = Map Coordinate Location
 
@@ -65,11 +76,12 @@ data Direction = North | South | West | East
     deriving (Show, Eq)
 
 newtype Itemname = Itemname String
-    deriving (Show, Eq)
+    deriving (Show, Eq, Ord)
 
 
 initialGameState = GameState {
-    playerAt = (0, 0)
+    playerAt = (0, 0),
+    items = Map.fromList [(Itemname "rusted key", (0, 0))]
 }
 
 gameMap :: GameMap

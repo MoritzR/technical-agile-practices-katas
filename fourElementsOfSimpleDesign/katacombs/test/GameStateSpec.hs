@@ -10,7 +10,7 @@ spec = do
         let center = Location "center" ""
             east = Location "east" "the location to the east"
             west = Location "west" ""
-            north = Location "north" ""
+            north = Location "north" "the location to the north"
             south = Location "south" ""
             gameMap = Map.fromList
                 [ ((0, 0), center)
@@ -19,7 +19,8 @@ spec = do
                 , ((0, 1), north)
                 , ((0, -1), south)
                 ]
-            state = GameState { playerAt = (0, 0) }
+            items = Map.fromList [(Itemname "a golden statue", (0, 1))]
+            state = GameState { playerAt = (0, 0), items = items }
             stateAfterCommand command = snd $ doCommand gameMap command state
             messageAfterCommand command = fst $ doCommand gameMap command state
         
@@ -40,6 +41,9 @@ spec = do
             it "should also return title and description of the new location" $ do
                 let message = messageAfterCommand (Go East) 
                 message `shouldBe` "east\nthe location to the east"
+            it "should also show a description of the items in the location" $ do
+                let message = messageAfterCommand (Go North) 
+                message `shouldBe` "north\nthe location to the north\nItems in the location: 'a golden statue'"
 
         describe "look" $ do
             it "should display a message after looking north" $ do
