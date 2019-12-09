@@ -7,6 +7,7 @@ module GameState
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Maybe (listToMaybe, fromMaybe)
+import Data.Function ((&))
 import Model
 
 doCommand :: GameMap -> Command -> GameState -> (MessageToPlayer, GameState)
@@ -21,13 +22,13 @@ doCommand gameMap (Go toDirection) state =
 doCommand gameMap (Look toDirection) state =
     ("You see the " ++ show toDirection, state)
 doCommand gameMap (LookAt nameOfItem) state =
-    ( ( fromMaybe ("There is no item " ++ show nameOfItem)
-        . listToMaybe
-        . map (\item -> itemDescription item)
-        . filter (\item -> itemName item == nameOfItem)
-        . Map.keys
-        . Map.filter ((==) (playerAt state)))
-            (items state)
+    ( items state
+        & Map.filter ((==) (playerAt state))
+        & Map.keys
+        & filter (\item -> itemName item == nameOfItem)
+        & map (\item -> itemDescription item)
+        & listToMaybe
+        & fromMaybe ("There is no item " ++ show nameOfItem)
     , state)
 
 getPlayerLocation :: GameMap -> GameState -> Location
