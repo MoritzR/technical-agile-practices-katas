@@ -21,7 +21,13 @@ doCommand gameMap (Go toDirection) state =
 doCommand gameMap (Look toDirection) state =
     ("You see the " ++ show toDirection, state)
 doCommand gameMap (LookAt nameOfItem) state =
-    ( (fromMaybe ("There is no item " ++ show nameOfItem) . listToMaybe . map (\item -> itemDescription item) . filter (\item -> itemName item == nameOfItem) . Map.keys . Map.filter ((==) (playerAt state))) (items state)
+    ( ( fromMaybe ("There is no item " ++ show nameOfItem)
+        . listToMaybe
+        . map (\item -> itemDescription item)
+        . filter (\item -> itemName item == nameOfItem)
+        . Map.keys
+        . Map.filter ((==) (playerAt state)))
+            (items state)
     , state)
 
 getPlayerLocation :: GameMap -> GameState -> Location
