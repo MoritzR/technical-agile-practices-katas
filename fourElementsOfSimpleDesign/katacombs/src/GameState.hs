@@ -1,18 +1,12 @@
 module GameState 
-    ( GameState (..)
-    , Location (..)
-    , GameMap (..)
-    , Command (..)
-    , Direction (..)
-    , Itemname (..)
-    , Coordinate
-    , initialGameState
+    ( initialGameState
     , gameMap
     , doCommand
     , getPlayerLocation) where
 
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Model
 
 doCommand :: GameMap -> Command -> GameState -> (MessageToPlayer, GameState)
 doCommand gameMap (Go toDirection) state =
@@ -42,42 +36,11 @@ moveTo direction (x, y) = case direction of
 
 type MessageToPlayer = String
 
-data GameState = GameState {
-    playerAt :: Coordinate,
-    items :: ItemLocations
-}
-
-type ItemLocations = Map Itemname Coordinate
-
 displayItemsAtLocation :: [Itemname] -> String
 displayItemsAtLocation itemNames
     | names == []       = ""
     | otherwise         = "\nItems in the location: " ++ unwords names
         where names = map (\(Itemname name) -> "'" ++ name ++ "'") itemNames
-
-type GameMap = Map Coordinate Location
-
-type Coordinate = (Int, Int)
-
-data Location = Location {
-    title :: String,
-    description :: String
-} deriving (Eq)
-
-instance Show Location where
-    show l = "Location '" ++ title l ++ "'"
-
-data Command = Go Direction
-    | Look Direction
-    | LookAt Itemname
-    deriving (Show, Eq)
-
-data Direction = North | South | West | East
-    deriving (Show, Eq)
-
-newtype Itemname = Itemname String
-    deriving (Show, Eq, Ord)
-
 
 initialGameState = GameState {
     playerAt = (0, 0),

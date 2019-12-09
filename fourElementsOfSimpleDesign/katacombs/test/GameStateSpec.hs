@@ -2,6 +2,7 @@ module GameStateSpec (spec) where
 
 import Test.Hspec
 import GameState
+import Model
 import qualified Data.Map as Map
 
 spec :: Spec

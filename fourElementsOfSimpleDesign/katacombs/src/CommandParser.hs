@@ -3,7 +3,7 @@ module CommandParser (parse) where
 import Data.Maybe (listToMaybe)
 import Text.ParserCombinators.ReadP (ReadP, choice, readP_to_S, string)
 import qualified Text.ParserCombinators.ReadP as Parser
-import GameState (Command (..), Direction (..), Itemname (..))
+import Model
 
 parse :: String -> Maybe Command
 parse = listToMaybe . map fst . readP_to_S command
