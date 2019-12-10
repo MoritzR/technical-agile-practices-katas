@@ -42,4 +42,7 @@ newtype ItemName = ItemName String
 instance Show ItemName where
     show (ItemName name) = name
 
-type ItemLocations = Map Item Coordinate
+type ItemLocations = Map Item ItemLocation
+
+data ItemLocation = AtCoordinate Coordinate | InBag
+    deriving (Show, Eq)

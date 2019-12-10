@@ -10,7 +10,7 @@ import Model
 doCommand :: GameMap -> Command -> GameState -> (MessageToPlayer, GameState)
 doCommand gameMap (Go toDirection) state =
     ( title newLocation ++ "\n" ++ description newLocation
-        ++ displayItemsAtLocation (Map.keys (Map.filter ((==) newCoordinate) (items state)))
+        ++ displayItemsAtLocation (Map.keys (Map.filter ((==) $ AtCoordinate newCoordinate) (items state)))
     , newState
     )
         where   newCoordinate   = moveTo toDirection (playerAt state)
@@ -24,15 +24,19 @@ doCommand gameMap (LookAt nameOfItem) state =
         & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
     , state)
 doCommand gameMap (Take nameOfItem) state =
-    ( findItemAtCurrentLocation gameMap nameOfItem state
+    ( maybeFoundItem
         & fmap (\_ -> "You picked up " ++ show nameOfItem)
         & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
-    , state)
+    , case maybeFoundItem of
+        Just item   -> state { items = Map.insert item InBag (items state)}
+        Nothing     -> state
+    )
+        where maybeFoundItem = findItemAtCurrentLocation gameMap nameOfItem state
 
 findItemAtCurrentLocation :: GameMap -> ItemName -> GameState -> Maybe Item
 findItemAtCurrentLocation gameMap nameOfItem state =
     items state
-        & Map.filter ((==) (playerAt state))
+        & Map.filter ((==) $ AtCoordinate $ playerAt state)
         & Map.keys
         & filter (\item -> itemName item == nameOfItem)
         & listToMaybe

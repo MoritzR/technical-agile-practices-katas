@@ -1,12 +1,23 @@
 module GameState where
 
-import qualified Data.Map as Map (fromList)
+import qualified Data.Map as Map
+import Data.Function ((&))
 import Model
+
+bag :: GameState -> [Item]
+bag state = items state
+    & Map.filter ((==) InBag)
+    & Map.keys
+
+createItems :: [(Item, Coordinate)] -> ItemLocations
+createItems list = list
+    & map (\entry -> fmap AtCoordinate entry)
+    & Map.fromList
 
 initialGameState :: GameState
 initialGameState = GameState {
     playerAt = (0, 0),
-    items = Map.fromList
+    items = createItems
         [   (Item {
                 itemName = ItemName "rusted key",
                 itemDescription = "A rusted key, the head of this key resembles a horse." }

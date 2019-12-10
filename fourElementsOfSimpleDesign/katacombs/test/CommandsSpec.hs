@@ -4,6 +4,7 @@ import Test.Hspec
 import Commands
 import Model
 import qualified Data.Map as Map
+import qualified GameState as GS
 
 spec :: Spec
 spec = do
@@ -19,7 +20,7 @@ spec = do
             , ((0, 1), north)
             , ((0, -1), south)
             ]
-        items = Map.fromList
+        items = GS.createItems
             [ (Item (ItemName "a golden statue") "", (0, 1))
             , (Item (ItemName "a silver key") "", (0, 1))
             , (Item (ItemName "rusty key") "The head of this rusty key resembles a heart.", (0, 0))]
@@ -69,3 +70,7 @@ spec = do
         it "should display a message when there is no such item in the location" $ do
             let message = messageAfterCommand (Take $ ItemName "item that is not there")
             message `shouldBe` "There is no 'item that is not there' here."
+        it "should add the item to the player inventory" $ do
+            let nextState = stateAfterCommand (Take $ ItemName "rusty key")
+                itemsInBag = map itemName $ GS.bag nextState
+            itemsInBag `shouldBe` [ItemName "rusty key"]
