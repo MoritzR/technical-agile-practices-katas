@@ -25,7 +25,7 @@ doCommand gameMap (LookAt nameOfItem) state =
         & filter (\item -> itemName item == nameOfItem)
         & map (\item -> itemDescription item)
         & listToMaybe
-        & fromMaybe ("There is no item " ++ show nameOfItem)
+        & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
     , state)
 doCommand gameMap (Take toDirection) state =
     ("You picked up " ++ show toDirection, state)

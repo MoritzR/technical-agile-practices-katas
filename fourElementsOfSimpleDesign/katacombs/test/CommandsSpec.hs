@@ -59,6 +59,9 @@ spec = do
         it "should display a description after looking at an item" $ do
             let message = messageAfterCommand (LookAt $ ItemName "rusty key")
             message `shouldBe` "The head of this rusty key resembles a heart."
+        it "should display a description when there is no such item to look at" $ do
+            let message = messageAfterCommand (LookAt $ ItemName "item that is not there")
+            message `shouldBe` "There is no 'item that is not there' here."
     describe "take" $ do
         it "should display a message when picking up an item" $ do
             let message = messageAfterCommand (Take $ ItemName "rusty key")
