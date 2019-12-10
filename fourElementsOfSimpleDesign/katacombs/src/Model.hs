@@ -13,6 +13,7 @@ data Command = Go Direction
     | Look Direction
     | LookAt ItemName
     | Take ItemName
+    | Bag
     deriving (Show, Eq)
 
 data Location = Location {

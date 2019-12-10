@@ -27,6 +27,8 @@ spec = do
 
             ("take keys", Take (ItemName "keys")),
 
+            ("bag", Bag),
+
             ("look keys", LookAt (ItemName "keys")),
             ("look door", LookAt (ItemName "door"))]
 
