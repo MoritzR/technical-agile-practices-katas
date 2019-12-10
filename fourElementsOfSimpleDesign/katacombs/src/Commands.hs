@@ -19,24 +19,23 @@ doCommand gameMap (Go toDirection) state =
 doCommand gameMap (Look toDirection) state =
     ("You see the " ++ show toDirection, state)
 doCommand gameMap (LookAt nameOfItem) state =
-    ( items state
-        & Map.filter ((==) (playerAt state))
-        & Map.keys
-        & filter (\item -> itemName item == nameOfItem)
-        & map itemDescription
-        & listToMaybe
+    ( findItemAtCurrentLocation gameMap nameOfItem state
+        & fmap itemDescription
         & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
     , state)
 doCommand gameMap (Take nameOfItem) state =
-    ( items state
-        & Map.filter ((==) (playerAt state))
-        & Map.keys
-        & filter (\item -> itemName item == nameOfItem)
-        & listToMaybe
+    ( findItemAtCurrentLocation gameMap nameOfItem state
         & fmap (\_ -> "You picked up " ++ show nameOfItem)
         & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
     , state)
 
+findItemAtCurrentLocation :: GameMap -> ItemName -> GameState -> Maybe Item
+findItemAtCurrentLocation gameMap nameOfItem state =
+    items state
+        & Map.filter ((==) (playerAt state))
+        & Map.keys
+        & filter (\item -> itemName item == nameOfItem)
+        & listToMaybe
 
 getPlayerLocation :: GameMap -> GameState -> Location
 getPlayerLocation map state = case Map.lookup (playerAt state) map of
