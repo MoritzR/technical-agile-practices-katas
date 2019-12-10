@@ -27,8 +27,15 @@ doCommand gameMap (LookAt nameOfItem) state =
         & listToMaybe
         & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
     , state)
-doCommand gameMap (Take toDirection) state =
-    ("You picked up " ++ show toDirection, state)
+doCommand gameMap (Take nameOfItem) state =
+    ( items state
+        & Map.filter ((==) (playerAt state))
+        & Map.keys
+        & filter (\item -> itemName item == nameOfItem)
+        & listToMaybe
+        & fmap (\_ -> "You picked up " ++ show nameOfItem)
+        & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
+    , state)
 
 
 getPlayerLocation :: GameMap -> GameState -> Location

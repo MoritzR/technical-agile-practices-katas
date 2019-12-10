@@ -66,3 +66,6 @@ spec = do
         it "should display a message when picking up an item" $ do
             let message = messageAfterCommand (Take $ ItemName "rusty key")
             message `shouldBe` "You picked up rusty key"
+        it "should display a message when there is no such item in the location" $ do
+            let message = messageAfterCommand (Take $ ItemName "item that is not there")
+            message `shouldBe` "There is no 'item that is not there' here."
