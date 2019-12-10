@@ -24,14 +24,12 @@ doCommand gameMap (LookAt nameOfItem) state =
         & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
     , state)
 doCommand gameMap (Take nameOfItem) state =
-    ( maybeFoundItem
-        & fmap (\_ -> "You picked up " ++ show nameOfItem)
-        & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
-    , case maybeFoundItem of
-        Just item   -> state { items = Map.insert item InBag (items state)}
-        Nothing     -> state
-    )
-        where maybeFoundItem = findItemAtCurrentLocation gameMap nameOfItem state
+    case maybeFoundItem of
+        Just item   ->  ( "You picked up " ++ show nameOfItem
+                        , state { items = Map.insert item InBag (items state)})
+        Nothing     ->  ("There is no '" ++ show nameOfItem ++ "' here."
+                        , state)
+    where maybeFoundItem = findItemAtCurrentLocation gameMap nameOfItem state
 
 findItemAtCurrentLocation :: GameMap -> ItemName -> GameState -> Maybe Item
 findItemAtCurrentLocation gameMap nameOfItem state =
