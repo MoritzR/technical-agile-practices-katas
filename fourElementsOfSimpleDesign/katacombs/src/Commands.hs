@@ -23,7 +23,7 @@ doCommand gameMap (LookAt nameOfItem) state =
         & Map.filter ((==) (playerAt state))
         & Map.keys
         & filter (\item -> itemName item == nameOfItem)
-        & map (\item -> itemDescription item)
+        & map itemDescription
         & listToMaybe
         & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
     , state)
