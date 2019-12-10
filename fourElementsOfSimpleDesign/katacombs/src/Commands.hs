@@ -5,6 +5,7 @@ module Commands
 import qualified Data.Map as Map
 import Data.Maybe (listToMaybe, fromMaybe)
 import Data.Function ((&))
+import qualified GameState as GS (bag)
 import Model
 
 doCommand :: GameMap -> Command -> GameState -> (MessageToPlayer, GameState)
@@ -30,6 +31,9 @@ doCommand gameMap (Take nameOfItem) state =
         Nothing     ->  ("There is no '" ++ show nameOfItem ++ "' here."
                         , state)
     where maybeFoundItem = findItemAtCurrentLocation gameMap nameOfItem state
+doCommand _gameMap Bag state =
+    ( displayItemsInBag $ GS.bag state
+    , state)
 
 findItemAtCurrentLocation :: GameMap -> ItemName -> GameState -> Maybe Item
 findItemAtCurrentLocation gameMap nameOfItem state =
@@ -57,4 +61,10 @@ displayItemsAtLocation :: [Item] -> String
 displayItemsAtLocation items
     | items == []       = ""
     | otherwise         = "\nItems in the location: " ++ unwords names
+        where names = map (\(ItemName name) -> "'" ++ name ++ "'") . map itemName $ items
+
+displayItemsInBag :: [Item] -> String
+displayItemsInBag items
+    | items == []   = ""
+    | otherwise = "The bag contains: " ++ unwords names
         where names = map (\(ItemName name) -> "'" ++ name ++ "'") . map itemName $ items

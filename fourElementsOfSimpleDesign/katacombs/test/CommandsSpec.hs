@@ -3,6 +3,7 @@ module CommandsSpec (spec) where
 import Test.Hspec
 import Commands
 import Model
+import Data.Function ((&))
 import qualified Data.Map as Map
 import qualified GameState as GS
 
@@ -23,7 +24,8 @@ spec = do
         items = GS.createItems
             [ (Item (ItemName "a golden statue") "", (0, 1))
             , (Item (ItemName "a silver key") "", (0, 1))
-            , (Item (ItemName "rusty key") "The head of this rusty key resembles a heart.", (0, 0))]
+            , (Item (ItemName "rusty key") "The head of this rusty key resembles a heart.", (0, 0))
+            , (Item (ItemName "flute") "The flute is a musical instrument.", (0, 0))]
         state = GameState { playerAt = (0, 0), items = items }
         stateAfterCommand command = snd $ doCommand gameMap command state
         messageAfterCommand command = fst $ doCommand gameMap command state
@@ -74,3 +76,13 @@ spec = do
             let nextState = stateAfterCommand (Take $ ItemName "rusty key")
                 itemsInBag = map itemName $ GS.bag nextState
             itemsInBag `shouldBe` [ItemName "rusty key"]
+    describe "bag" $ do
+        it "should display the names of the items in the bag sorted alphabetically" $ do
+            let message = state
+                    & doCommand gameMap (Take $ ItemName "rusty key")
+                    & snd
+                    & doCommand gameMap (Take $ ItemName "flute")
+                    & snd
+                    & doCommand gameMap Bag
+                    & fst
+            message `shouldBe` "The bag contains: 'flute' 'rusty key'"
