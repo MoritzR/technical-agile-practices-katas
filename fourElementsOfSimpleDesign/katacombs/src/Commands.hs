@@ -1,5 +1,6 @@
 module Commands
-    ( doCommand
+    ( Command
+    , doCommand
     , getPlayerLocation ) where
 
 import qualified Data.Map as Map
@@ -8,32 +9,44 @@ import Data.Function ((&))
 import qualified GameState as GS (bag)
 import Model
 
-doCommand :: GameMap -> Command -> GameState -> (MessageToPlayer, GameState)
-doCommand gameMap (Go toDirection) state =
-    ( title newLocation ++ "\n" ++ description newLocation
-        ++ displayItemsAtLocation (Map.keys (Map.filter ((==) $ AtCoordinate newCoordinate) (items state)))
-    , newState
-    )
-        where   newCoordinate   = moveTo toDirection (playerAt state)
-                newState        = state { playerAt = newCoordinate }
-                newLocation     = getPlayerLocation gameMap newState
-doCommand gameMap (Look toDirection) state =
-    ("You see the " ++ show toDirection, state)
-doCommand gameMap (LookAt nameOfItem) state =
-    ( findItemAtCurrentLocation gameMap nameOfItem state
-        & fmap itemDescription
-        & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
-    , state)
-doCommand gameMap (Take nameOfItem) state =
+doCommand :: Command -> Katacombs ()
+doCommand (Go direction) = do
+    moveIn direction
+
+    location <- getPlayerLocation
+    tellPlayer $ title location
+    tellPlayer $ description location
+
+    displayItemsAtLocation
+
+doCommand (Look toDirection) =
+    tellPlayer $ "You see the " ++ show toDirection
+
+doCommand (LookAt nameOfItem) = do
+    gameMap <- getMap
+    state <- getState
+    tellPlayer $
+        findItemAtCurrentLocation gameMap nameOfItem state
+            & fmap itemDescription
+            & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
+
+doCommand (Take nameOfItem) = do
+    gameMap <- getMap
+    state <- getState
+    let maybeFoundItem = findItemAtCurrentLocation gameMap nameOfItem state
     case maybeFoundItem of
-        Just item   ->  ( "You picked up " ++ show nameOfItem
-                        , state { items = Map.insert item InBag (items state)})
-        Nothing     ->  ("There is no '" ++ show nameOfItem ++ "' here."
-                        , state)
-    where maybeFoundItem = findItemAtCurrentLocation gameMap nameOfItem state
-doCommand _gameMap Bag state =
-    ( displayItemsInBag $ GS.bag state
-    , state)
+        Just item   ->  do 
+            tellPlayer $ "You picked up " ++ show nameOfItem
+            setState $ state { items = Map.insert item InBag (items state)}
+        Nothing     ->  do
+            tellPlayer $ "There is no '" ++ show nameOfItem ++ "' here."
+
+doCommand Bag = do
+    state <- getState
+    state
+        & GS.bag
+        & displayItemsInBag
+        & tellPlayer
 
 findItemAtCurrentLocation :: GameMap -> ItemName -> GameState -> Maybe Item
 findItemAtCurrentLocation gameMap nameOfItem state =
@@ -43,25 +56,37 @@ findItemAtCurrentLocation gameMap nameOfItem state =
         & filter (\item -> itemName item == nameOfItem)
         & listToMaybe
 
-getPlayerLocation :: GameMap -> GameState -> Location
-getPlayerLocation map state = case Map.lookup (playerAt state) map of
-    Just location   -> location
-    Nothing         -> Location "Limbo" "you shouldn't be here" -- TODO make this impossible
+getPlayerLocation :: Katacombs Location
+getPlayerLocation = do
+    gameMap <- getMap
+    state <- getState
+    case Map.lookup (playerAt state) gameMap of
+        Just location   -> return $ location
+        Nothing         -> return $ Location "Limbo" "you shouldn't be here" -- TODO make this impossible
 
-moveTo :: Direction -> Coordinate -> Coordinate
-moveTo direction (x, y) = case direction of
-    North   -> (x, y+1)
-    South   -> (x, y-1)
-    East    -> (x+1, y)
-    West    -> (x-1, y)
+displayItemsAtLocation :: Katacombs ()
+displayItemsAtLocation = do
+    state <- getState
+    let itemsAtLocation = items state
+            & Map.filter ((==) $ AtCoordinate (playerAt state))
+            & Map.keys
+        itemNames = itemsAtLocation
+            & map itemName
+            & map (\(ItemName name) -> "'" ++ name ++ "'")
+    if (not . null) itemNames
+        then tellPlayer ("Items in the location: " ++ unwords itemNames)
+        else return ()
 
-type MessageToPlayer = String
-
-displayItemsAtLocation :: [Item] -> String
-displayItemsAtLocation items
-    | items == []       = ""
-    | otherwise         = "\nItems in the location: " ++ unwords names
-        where names = map (\(ItemName name) -> "'" ++ name ++ "'") . map itemName $ items
+moveIn :: Direction -> Katacombs ()
+moveIn direction = do
+    state <- getState
+    let (x, y) = playerAt state
+    let newCoordinate = case direction of
+            North   -> (x, y+1)
+            South   -> (x, y-1)
+            East    -> (x+1, y)
+            West    -> (x-1, y)
+    setState $ state { playerAt = newCoordinate }
 
 displayItemsInBag :: [Item] -> String
 displayItemsInBag items

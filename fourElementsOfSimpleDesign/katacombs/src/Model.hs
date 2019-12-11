@@ -1,6 +1,18 @@
 module Model where
 
 import Data.Map (Map)
+import Control.Monad.RWS.Lazy (RWS)
+import qualified Control.Monad.RWS.Lazy as RWS
+
+type Katacombs r = RWS GameMap [String] GameState r
+tellPlayer :: String -> Katacombs ()
+tellPlayer s = RWS.tell [s]
+getMap :: Katacombs GameMap
+getMap = RWS.ask
+getState :: Katacombs GameState
+getState = RWS.get
+setState :: GameState -> Katacombs ()
+setState = RWS.put
 
 data GameState = GameState {
     playerAt :: Coordinate,

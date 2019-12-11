@@ -4,6 +4,8 @@ import Model (GameState)
 import qualified GameState as GS
 import qualified CommandParser as Parser
 import qualified Commands
+import Control.Monad.RWS.Lazy (RWS)
+import qualified Control.Monad.RWS.Lazy as RWS
 
 startGame :: IO ()
 startGame = do
@@ -22,7 +24,10 @@ game state = do
     
 continueWithUpdatedState playerCommand state = case playerCommand of
     Just command    -> do
-        let (messageToPlayer, newState) = Commands.doCommand GS.gameMap command state
-        putStrLn messageToPlayer
+        let (newState, messageToPlayer) = run command state
+        putStrLn $ unlines messageToPlayer
         game $ newState
-    Nothing         -> game state 
+    Nothing         -> game state
+
+run :: Commands.Command -> GameState -> (GameState, [String])
+run command state = RWS.execRWS (Commands.doCommand command) GS.gameMap state
