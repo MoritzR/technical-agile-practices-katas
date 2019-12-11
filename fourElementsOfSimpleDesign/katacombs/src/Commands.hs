@@ -23,17 +23,15 @@ doCommand (Look toDirection) =
     tellPlayer $ "You see the " ++ show toDirection
 
 doCommand (LookAt nameOfItem) = do
-    gameMap <- getMap
-    state <- getState
-    tellPlayer $
-        findItemAtCurrentLocation gameMap nameOfItem state
-            & fmap itemDescription
-            & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
+    maybeItem <- findItemAtCurrentLocation nameOfItem
+    maybeItem
+        & fmap itemDescription
+        & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
+        & tellPlayer
 
 doCommand (Take nameOfItem) = do
-    gameMap <- getMap
+    maybeFoundItem <- findItemAtCurrentLocation nameOfItem
     state <- getState
-    let maybeFoundItem = findItemAtCurrentLocation gameMap nameOfItem state
     case maybeFoundItem of
         Just item   ->  do 
             tellPlayer $ "You picked up " ++ show nameOfItem
@@ -48,13 +46,15 @@ doCommand Bag = do
         & displayItemsInBag
         & tellPlayer
 
-findItemAtCurrentLocation :: GameMap -> ItemName -> GameState -> Maybe Item
-findItemAtCurrentLocation gameMap nameOfItem state =
+findItemAtCurrentLocation :: ItemName -> Katacombs (Maybe Item)
+findItemAtCurrentLocation nameOfItem = do
+    state <- getState
     items state
         & Map.filter ((==) $ AtCoordinate $ playerAt state)
         & Map.keys
         & filter (\item -> itemName item == nameOfItem)
         & listToMaybe
+        & return
 
 getPlayerLocation :: Katacombs Location
 getPlayerLocation = do
