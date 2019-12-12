@@ -7,7 +7,7 @@ import qualified Data.Map as Map
 import Data.Maybe (listToMaybe, fromMaybe)
 import Data.Function ((&))
 import qualified GameState as GS (bag)
-import Control.Lens ((^.), (.=), (+=), (-=))
+import Control.Lens ((^.), (.=), (+=), (-=), at, _Just)
 import Model
 
 doCommand :: Command -> Katacombs ()
@@ -32,11 +32,10 @@ doCommand (LookAt nameOfItem) = do
 
 doCommand (Take nameOfItem) = do
     maybeFoundItem <- findItemAtCurrentLocation nameOfItem
-    state <- getState
     case maybeFoundItem of
         Just item   ->  do 
             tellPlayer $ "You picked up " ++ show nameOfItem
-            items .= (Map.insert item InBag (state^.items))
+            items.at(item)._Just .= InBag
         Nothing     ->  do
             tellPlayer $ "There is no '" ++ show nameOfItem ++ "' here."
 
