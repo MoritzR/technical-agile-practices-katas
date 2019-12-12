@@ -43,7 +43,7 @@ doCommand Bag = do
     state <- getState
     state
         & GS.bag
-        & displayItemsInBag
+        & showItemsInBag
         & tellPlayer
 
 findItemAtCurrentLocation :: ItemName -> Katacombs (Maybe Item)
@@ -83,9 +83,9 @@ moveIn direction = case direction of
     East    -> playerAt.x += 1
     West    -> playerAt.x -= 1
 
-displayItemsInBag :: [Item] -> String
-displayItemsInBag items
+showItemsInBag :: [Item] -> String
+showItemsInBag items
     | items == []   = "The bag is empty."
-    | otherwise = "The bag contains: " ++ unwords names
+    | otherwise     = "The bag contains: " ++ unwords names
         where names = map (\(ItemName name) -> "'" ++ name ++ "'") 
                     . map itemName $ items
