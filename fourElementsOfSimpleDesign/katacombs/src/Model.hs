@@ -1,8 +1,10 @@
+{-# LANGUAGE TemplateHaskell #-}
 module Model where
 
 import Data.Map (Map)
 import Control.Monad.RWS.Lazy (RWS)
 import qualified Control.Monad.RWS.Lazy as RWS
+import Control.Lens (makeLenses)
 
 type Katacombs r = RWS GameMap [String] GameState r
 tellPlayer :: String -> Katacombs ()
@@ -15,8 +17,8 @@ setState :: GameState -> Katacombs ()
 setState = RWS.put
 
 data GameState = GameState {
-    playerAt :: Coordinate,
-    items :: ItemLocations
+    _playerAt :: Coordinate,
+    _items :: ItemLocations
 }
 
 type GameMap = Map Coordinate Location
@@ -29,8 +31,8 @@ data Command = Go Direction
     deriving (Show, Eq)
 
 data Location = Location {
-    title :: String,
-    description :: String
+    _title :: String,
+    _description :: String
 } deriving (Show, Eq)
 
 
@@ -59,3 +61,6 @@ type ItemLocations = Map Item ItemLocation
 
 data ItemLocation = AtCoordinate Coordinate | InBag
     deriving (Show, Eq)
+
+makeLenses ''GameState
+makeLenses ''Location

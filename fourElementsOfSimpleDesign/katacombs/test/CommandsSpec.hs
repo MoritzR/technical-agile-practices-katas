@@ -27,7 +27,7 @@ spec = do
             , (Item (ItemName "a silver key") "", (0, 1))
             , (Item (ItemName "rusty key") "The head of this rusty key resembles a heart.", (0, 0))
             , (Item (ItemName "flute") "The flute is a musical instrument.", (0, 0))]
-        state = GameState { playerAt = (0, 0), items = items }
+        state = GameState { _playerAt = (0, 0), _items = items }
         run action = RWS.execRWS action gameMap state
         stateAfterCommand command = fst $ run (doCommand command)
         messageAfterCommand command = snd $ run (doCommand command)
