@@ -40,7 +40,16 @@ doCommand (Take nameOfItem) = do
             tellPlayer $ "There is no '" ++ show nameOfItem ++ "' here."
 
 doCommand (Drop nameOfItem) = do
-    tellPlayer $ "You dropped " ++ show nameOfItem
+    state <- getState
+    let maybeFoundItem = state
+            & GS.bag
+            & filter (\item -> itemName item == nameOfItem)
+            & listToMaybe
+    case maybeFoundItem of
+        Just item   ->  do 
+            tellPlayer $ "You dropped " ++ show nameOfItem
+        Nothing     ->  do
+            tellPlayer $ "There is no '" ++ show nameOfItem ++ "' in your bag."
 
 doCommand Bag = do
     state <- getState

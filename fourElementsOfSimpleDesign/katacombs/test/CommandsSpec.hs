@@ -85,6 +85,9 @@ spec = do
                     doCommand (Take $ ItemName "rusty key")
                     doCommand (Drop $ ItemName "rusty key")
             message `shouldContain` ["You dropped rusty key"]
+        it "should display a message when there is no such item in the bag" $ do
+            let message = messageAfterCommand (Drop $ ItemName "item that is not in bag")
+            message `shouldBe` ["There is no 'item that is not in bag' in your bag."]
     describe "bag" $ do
         it "should display the names of the items in the bag sorted alphabetically" $ do
             let message = snd $ run $ do
