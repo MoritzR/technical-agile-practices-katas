@@ -2,4 +2,4 @@
 cat src/* > words.txt
 
 # wordcloud_cli from https://github.com/amueller/word_cloud
-wordcloud_cli --text words.txt --imagefile cloud.png --width 1200 --height 800
+wordcloud_cli --text words.txt --imagefile cloud.png --relative_scaling 0.7 --width 1200 --height 800
