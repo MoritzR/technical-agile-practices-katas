@@ -27,6 +27,7 @@ data Command = Go Direction
     | Look Direction
     | LookAt ItemName
     | Take ItemName
+    | Drop ItemName
     | Bag
     deriving (Show, Eq)
 

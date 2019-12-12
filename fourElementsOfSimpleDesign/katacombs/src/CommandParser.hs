@@ -10,7 +10,14 @@ parse = listToMaybe . map fst . readP_to_S command
 
 command :: ReadP Command
 command = do
-    c <- choice [goCommand, lookCommand, lookAtCommand, takeCommand, bagCommand]
+    c <- choice 
+        [ goCommand
+        , lookCommand
+        , lookAtCommand
+        , takeCommand
+        , bagCommand
+        , dropCommand
+        ]
     Parser.eof
     return c
 
@@ -37,6 +44,12 @@ takeCommand = do
     string "take "
     item <- Parser.many1 Parser.get
     return $ Take (ItemName item)
+
+dropCommand :: ReadP Command
+dropCommand = do
+    string "drop "
+    item <- Parser.many1 Parser.get
+    return $ Drop (ItemName item)
 
 bagCommand :: ReadP Command
 bagCommand = do
