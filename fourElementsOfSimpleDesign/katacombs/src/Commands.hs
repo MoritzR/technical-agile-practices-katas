@@ -7,7 +7,7 @@ import qualified Data.Map as Map
 import Data.Maybe (listToMaybe, fromMaybe)
 import Data.Function ((&))
 import qualified GameState as GS (bag)
-import Control.Lens ((^.), (.=))
+import Control.Lens ((^.), (.=), (+=), (-=))
 import Model
 
 doCommand :: Command -> Katacombs ()
@@ -79,15 +79,11 @@ displayItemsAtLocation = do
         else return ()
 
 moveIn :: Direction -> Katacombs ()
-moveIn direction = do
-    state <- getState
-    let (x, y) = state^.playerAt
-    let newCoordinate = case direction of
-            North   -> (x, y+1)
-            South   -> (x, y-1)
-            East    -> (x+1, y)
-            West    -> (x-1, y)
-    playerAt .= newCoordinate
+moveIn direction = case direction of
+    North   -> playerAt.y += 1
+    South   -> playerAt.y -= 1
+    East    -> playerAt.x += 1
+    West    -> playerAt.x -= 1
 
 displayItemsInBag :: [Item] -> String
 displayItemsInBag items

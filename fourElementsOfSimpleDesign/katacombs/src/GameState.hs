@@ -10,14 +10,19 @@ bag state = state^.items
     & Map.filter ((==) InBag)
     & Map.keys
 
-createItems :: [(Item, Coordinate)] -> ItemLocations
+createItems :: [(Item, (Int, Int))] -> ItemLocations
 createItems list = list
-    & map (\entry -> fmap AtCoordinate entry)
+    & map (\entry -> fmap (AtCoordinate . (uncurry Coordinate)) entry)
+    & Map.fromList
+
+createGameMap :: [((Int, Int), Location)] -> GameMap
+createGameMap list = list
+    & map (\(position, location) -> (uncurry Coordinate position, location))
     & Map.fromList
 
 initialGameState :: GameState
 initialGameState = GameState {
-    _playerAt = (0, 0),
+    _playerAt = Coordinate 0 0,
     _items = createItems
         [   (Item {
                 itemName = ItemName "rusted key",
@@ -26,7 +31,7 @@ initialGameState = GameState {
 }
 
 gameMap :: GameMap
-gameMap = Map.fromList
+gameMap = createGameMap
     [ ((0, 0), Location {
             _title = "Jail Cell",
             _description = "You are standing in a jail cell. A faint light reaches you from a small shaft in the ceiling."

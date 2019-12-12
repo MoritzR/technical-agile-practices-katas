@@ -39,7 +39,10 @@ data Location = Location {
 data Direction = North | South | West | East
     deriving (Show, Eq)
 
-type Coordinate = (Int, Int)
+data Coordinate = Coordinate {
+    _x :: Int,
+    _y :: Int
+} deriving (Show, Eq, Ord)
 
 data Item = Item {
     itemName :: ItemName,
@@ -64,3 +67,4 @@ data ItemLocation = AtCoordinate Coordinate | InBag
 
 makeLenses ''GameState
 makeLenses ''Location
+makeLenses ''Coordinate
