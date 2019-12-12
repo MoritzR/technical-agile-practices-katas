@@ -88,4 +88,5 @@ displayItemsInBag :: [Item] -> String
 displayItemsInBag items
     | items == []   = "The bag is empty."
     | otherwise = "The bag contains: " ++ unwords names
-        where names = map (\(ItemName name) -> "'" ++ name ++ "'") . map itemName $ items
+        where names = map (\(ItemName name) -> "'" ++ name ++ "'") 
+                    . map itemName $ items
