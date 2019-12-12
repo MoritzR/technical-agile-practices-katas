@@ -79,6 +79,12 @@ spec = do
             let nextState = stateAfterCommand (Take $ ItemName "rusty key")
                 itemsInBag = map itemName $ GS.bag nextState
             itemsInBag `shouldBe` [ItemName "rusty key"]
+    describe "drop" $ do
+        it "should display a message when dropping an item" $ do
+            let message = snd $ run $ do
+                    doCommand (Take $ ItemName "rusty key")
+                    doCommand (Drop $ ItemName "rusty key")
+            message `shouldContain` ["You dropped rusty key"]
     describe "bag" $ do
         it "should display the names of the items in the bag sorted alphabetically" $ do
             let message = snd $ run $ do

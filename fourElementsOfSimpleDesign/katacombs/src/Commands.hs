@@ -39,6 +39,9 @@ doCommand (Take nameOfItem) = do
         Nothing     ->  do
             tellPlayer $ "There is no '" ++ show nameOfItem ++ "' here."
 
+doCommand (Drop nameOfItem) = do
+    tellPlayer $ "You dropped " ++ show nameOfItem
+
 doCommand Bag = do
     state <- getState
     state
