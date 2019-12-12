@@ -1,6 +1,6 @@
 module Game where
 
-import Model (GameState)
+import Model (GameState, Command(LookAround))
 import qualified GameState as GS
 import qualified CommandParser as Parser
 import qualified Commands
@@ -10,7 +10,13 @@ import qualified Control.Monad.RWS.Lazy as RWS
 startGame :: IO ()
 startGame = do
     putStrLn "Katacombs of Shoreditch"
-    game GS.initialGameState
+    startGameWithLookingAround GS.initialGameState
+
+startGameWithLookingAround :: GameState -> IO ()
+startGameWithLookingAround state = do
+    let (newState, messages) = run LookAround state
+    putStrLn $ unlines messages
+    game newState
 
 game :: GameState -> IO ()
 game state = do
