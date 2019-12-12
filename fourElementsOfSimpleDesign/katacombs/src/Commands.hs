@@ -60,6 +60,13 @@ doCommand Bag = do
         & showItemsInBag
         & tellPlayer
 
+doCommand LookAround = do
+    location <- getPlayerLocation
+    tellPlayer $ location^.title
+    tellPlayer $ location^.description
+
+    displayItemsAtLocation
+
 findItemAtCurrentLocation :: ItemName -> Katacombs (Maybe Item)
 findItemAtCurrentLocation nameOfItem = do
     state <- getState

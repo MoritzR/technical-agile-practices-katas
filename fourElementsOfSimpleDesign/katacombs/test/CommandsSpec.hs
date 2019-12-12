@@ -10,7 +10,7 @@ import qualified Control.Monad.RWS.Lazy as RWS
 
 spec :: Spec
 spec = do
-    let center = Location "center" ""
+    let center = Location "center" "center location description"
         east = Location "east" "the location to the east"
         west = Location "west" ""
         north = Location "north" "the location to the north"
@@ -61,6 +61,14 @@ spec = do
         it "should display a message after looking south" $ do
             let message = messageAfterCommand (Look South)
             message `shouldBe` ["You see the South"]
+
+    describe "lookAround" $ do
+        it "should display the location title, description and its items" $ do
+            let message = messageAfterCommand LookAround
+            message `shouldBe` 
+                [ "center"
+                , "center location description"
+                , "Items in the location: 'flute' 'rusty key'"]
     
     describe "lookAt" $ do
         it "should display a description after looking at an item" $ do

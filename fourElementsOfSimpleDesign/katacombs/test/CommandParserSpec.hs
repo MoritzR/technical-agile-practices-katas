@@ -25,6 +25,8 @@ spec = do
             ("look w", Look West),
             ("look e", Look East),
 
+            ("look", LookAround),
+
             ("take keys", Take (ItemName "keys")),
             ("drop keys", Drop (ItemName "keys")),
 

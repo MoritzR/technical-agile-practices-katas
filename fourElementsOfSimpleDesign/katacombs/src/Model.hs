@@ -26,6 +26,7 @@ type GameMap = Map Coordinate Location
 data Command = Go Direction
     | Look Direction
     | LookAt ItemName
+    | LookAround
     | Take ItemName
     | Drop ItemName
     | Bag

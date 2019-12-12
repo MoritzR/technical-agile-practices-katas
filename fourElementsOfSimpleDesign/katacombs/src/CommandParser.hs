@@ -17,6 +17,7 @@ command = do
         , takeCommand
         , bagCommand
         , dropCommand
+        , lookAroundCommand
         ]
     Parser.eof
     return c
@@ -38,6 +39,11 @@ lookAtCommand = do
     string "look "
     item <- Parser.many1 Parser.get
     return $ LookAt (ItemName item)
+
+lookAroundCommand :: ReadP Command
+lookAroundCommand = do
+    string "look"
+    return LookAround
 
 takeCommand :: ReadP Command
 takeCommand = do
