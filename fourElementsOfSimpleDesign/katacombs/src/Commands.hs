@@ -1,7 +1,8 @@
 module Commands
     ( Command
     , doCommand
-    , getPlayerLocation ) where
+    , getPlayerLocation
+    , displayItemsAtLocation ) where
 
 import qualified Data.Map as Map
 import Data.Maybe (listToMaybe, fromMaybe)
@@ -48,6 +49,7 @@ doCommand (Drop nameOfItem) = do
     case maybeFoundItem of
         Just item   ->  do 
             tellPlayer $ "You dropped " ++ show nameOfItem
+            items.at(item)._Just .= AtCoordinate (state^.playerAt)
         Nothing     ->  do
             tellPlayer $ "There is no '" ++ show nameOfItem ++ "' in your bag."
 

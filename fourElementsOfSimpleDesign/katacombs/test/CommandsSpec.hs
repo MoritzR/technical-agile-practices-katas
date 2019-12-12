@@ -91,7 +91,14 @@ spec = do
         it "should display a message when there is no such item in the bag" $ do
             let message = messageAfterCommand (Drop $ ItemName "item that is not in bag")
             message `shouldBe` ["There is no 'item that is not in bag' in your bag."]
-    
+        it "should place the item at the current location" $ do
+            let message = snd $ run $ do
+                    doCommand (Take $ ItemName "rusty key")
+                    doCommand (Go South)
+                    doCommand (Drop $ ItemName "rusty key")
+                    displayItemsAtLocation
+            message `shouldContain` ["Items in the location: 'rusty key'"]
+
     describe "bag" $ do
         it "should display the names of the items in the bag sorted alphabetically" $ do
             let message = snd $ run $ do
