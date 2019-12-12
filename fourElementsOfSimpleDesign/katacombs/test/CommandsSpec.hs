@@ -61,6 +61,7 @@ spec = do
         it "should display a message after looking south" $ do
             let message = messageAfterCommand (Look South)
             message `shouldBe` ["You see the South"]
+    
     describe "lookAt" $ do
         it "should display a description after looking at an item" $ do
             let message = messageAfterCommand (LookAt $ ItemName "rusty key")
@@ -68,6 +69,7 @@ spec = do
         it "should display a description when there is no such item to look at" $ do
             let message = messageAfterCommand (LookAt $ ItemName "item that is not there")
             message `shouldBe` ["There is no 'item that is not there' here."]
+    
     describe "take" $ do
         it "should display a message when picking up an item" $ do
             let message = messageAfterCommand (Take $ ItemName "rusty key")
@@ -79,6 +81,7 @@ spec = do
             let nextState = stateAfterCommand (Take $ ItemName "rusty key")
                 itemsInBag = map itemName $ GS.bag nextState
             itemsInBag `shouldBe` [ItemName "rusty key"]
+    
     describe "drop" $ do
         it "should display a message when dropping an item" $ do
             let message = snd $ run $ do
@@ -88,6 +91,7 @@ spec = do
         it "should display a message when there is no such item in the bag" $ do
             let message = messageAfterCommand (Drop $ ItemName "item that is not in bag")
             message `shouldBe` ["There is no 'item that is not in bag' in your bag."]
+    
     describe "bag" $ do
         it "should display the names of the items in the bag sorted alphabetically" $ do
             let message = snd $ run $ do
