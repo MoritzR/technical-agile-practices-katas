@@ -68,10 +68,9 @@ getPlayerLocation = do
 displayItemsAtLocation :: Katacombs ()
 displayItemsAtLocation = do
     state <- getState
-    let itemsAtLocation = state^.items
+    let itemNames = state^.items
             & Map.filter ((==) $ AtCoordinate $ state^.playerAt)
             & Map.keys
-        itemNames = itemsAtLocation
             & map itemName
             & map (\(ItemName name) -> "'" ++ name ++ "'")
     if (not . null) itemNames
