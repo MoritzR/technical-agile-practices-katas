@@ -15,7 +15,7 @@ This repo contains katas from the book **Agile Technical Practices Distilled: A 
 - Classic TDD III
     - [Roman Numerals (without TPP)](tdd/romanNumerals.hs)
     - [Prime factors](tdd/primefactors.hs)
-- Object Calisthenics
+- Design I - Object Calisthenics
     - [Tic Tac Toe](calisthenics/tictactoe.hs)
 - Testing Legacy Code
     - [Characterization tests on Gilded Rose kata](testingLegacyCode/gildedRose/test/GildedRoseSpec.hs)
@@ -23,6 +23,8 @@ This repo contains katas from the book **Agile Technical Practices Distilled: A 
     - [Gilded Rose kata](testingLegacyCode/gildedRose/)
 - Design VIII - The four elements of simple design
     - [Katacombs of Shoreditch](fourElementsOfSimpleDesign/katacombs)
+- Outside-In Development
+    - [Stock portfolio](outsideInDevelopment/stockportfolio.hs)
 
 ## Running the code
 You need to have [GHC](https://www.haskell.org/downloads/) and [Hspec](https://hspec.github.io/) installed.
