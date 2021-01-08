@@ -9,6 +9,7 @@ import Data.Maybe (listToMaybe, fromMaybe)
 import Data.Function ((&))
 import qualified GameState as GS (bag)
 import Control.Lens ((^.), (.=), (+=), (-=), at, _Just)
+import Control.Monad (unless)
 import Model
 
 doCommand :: Command -> Katacombs ()
@@ -93,9 +94,8 @@ displayItemsAtLocation = do
             & Map.keys
             & map itemName
             & map (\(ItemName name) -> "'" ++ name ++ "'")
-    if (not . null) itemNames
-        then tellPlayer ("Items in the location: " ++ unwords itemNames)
-        else return ()
+    unless (null itemNames) $
+        tellPlayer ("Items in the location: " ++ unwords itemNames)
 
 moveIn :: Direction -> Katacombs ()
 moveIn direction = case direction of
@@ -106,7 +106,8 @@ moveIn direction = case direction of
 
 showItemsInBag :: [Item] -> String
 showItemsInBag items
-    | items == []   = "The bag is empty."
+    | null items    = "The bag is empty."
     | otherwise     = "The bag contains: " ++ unwords names
-        where names = map (\(ItemName name) -> "'" ++ name ++ "'") 
-                    . map itemName $ items
+        where names = items
+                        & map itemName
+                        & map (\(ItemName name) -> "'" ++ name ++ "'")
