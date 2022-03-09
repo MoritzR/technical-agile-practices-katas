@@ -11,7 +11,7 @@ parse = listToMaybe . map fst . readP_to_S command
 
 command :: ReadP Command
 command = do
-    c <- choice 
+    c <- choice
         [ go
         , look
         , lookAt
@@ -26,14 +26,12 @@ command = do
 go :: ReadP Command
 go = do
     string "go "
-    d <- direction
-    return $ Go d
+    Go <$> direction
 
 look :: ReadP Command
 look = do
     string "look "
-    d <- direction
-    return $ Look d
+    Look <$> direction
 
 lookAt :: ReadP Command
 lookAt = do
