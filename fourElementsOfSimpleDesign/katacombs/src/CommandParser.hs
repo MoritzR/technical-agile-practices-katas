@@ -36,8 +36,7 @@ look = do
 lookAt :: ReadP Command
 lookAt = do
     string "look "
-    item <- Parser.many1 Parser.get
-    return $ LookAt (ItemName item)
+    LookAt . ItemName <$> anyString
 
 lookAround :: ReadP Command
 lookAround = do
@@ -47,14 +46,12 @@ lookAround = do
 take :: ReadP Command
 take = do
     string "take "
-    item <- Parser.many1 Parser.get
-    return $ Take (ItemName item)
+    Take . ItemName <$> anyString
 
 drop :: ReadP Command
 drop = do
     string "drop "
-    item <- Parser.many1 Parser.get
-    return $ Drop (ItemName item)
+    Drop . ItemName <$> anyString
 
 bag :: ReadP Command
 bag = do
@@ -70,3 +67,6 @@ direction = do
         'w' -> return West
         'e' -> return East
         _   -> Parser.pfail
+
+anyString :: ReadP String
+anyString = Parser.many1 Parser.get
