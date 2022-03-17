@@ -4,20 +4,21 @@ import qualified Data.Map as Map
 import Data.Function ((&))
 import Control.Lens ((^.))
 import Model
+import qualified Data.Bifunctor as Bifunctor
 
 bag :: GameState -> [Item]
 bag state = state^.items
-    & Map.filter ((==) InBag)
+    & Map.filter (InBag ==)
     & Map.keys
 
 createItems :: [(Item, (Int, Int))] -> ItemLocations
 createItems list = list
-    & map (\entry -> fmap (AtCoordinate . (uncurry Coordinate)) entry)
+    & map (fmap (AtCoordinate . uncurry Coordinate))
     & Map.fromList
 
 createGameMap :: [((Int, Int), Location)] -> GameMap
 createGameMap list = list
-    & map (\(position, location) -> (uncurry Coordinate position, location))
+    & map (Bifunctor.first (uncurry Coordinate))
     & Map.fromList
 
 initialGameState :: GameState

@@ -27,13 +27,13 @@ game state = do
     if input=="quit"
         then return ()
         else continueWithUpdatedState commandFromPlayer state
-    
+
 continueWithUpdatedState playerCommand state = case playerCommand of
     Just command    -> do
         let (newState, messageToPlayer) = run command state
         putStrLn $ unlines messageToPlayer
-        game $ newState
+        game newState
     Nothing         -> game state
 
 run :: Commands.Command -> GameState -> (GameState, [String])
-run command state = RWS.execRWS (Commands.doCommand command) GS.gameMap state
+run command = RWS.execRWS (Commands.doCommand command) GS.gameMap

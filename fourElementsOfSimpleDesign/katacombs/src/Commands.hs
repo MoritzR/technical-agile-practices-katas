@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use map once" #-}
 module Commands
     ( Command
     , doCommand
@@ -8,9 +10,10 @@ import qualified Data.Map as Map
 import Data.Maybe (listToMaybe, fromMaybe)
 import Data.Function ((&))
 import qualified GameState as GS (bag)
-import Control.Lens ((^.), (.=), (+=), (-=), at, _Just)
+import Control.Lens ((^.), (.=), (+=), (-=), at, _Just, Ixed (ix))
 import Control.Monad (unless)
 import Model
+import Data.List (find)
 
 doCommand :: Command -> Katacombs ()
 doCommand (Go direction) = do
@@ -27,30 +30,27 @@ doCommand (Look toDirection) =
 
 doCommand (LookAt nameOfItem) = do
     maybeItem <- findItemAtCurrentLocation nameOfItem
+    let noItemMessage = "There is no '" ++ show nameOfItem ++ "' here."
     maybeItem
-        & fmap itemDescription
-        & fromMaybe ("There is no '" ++ show nameOfItem ++ "' here.")
+        & maybe noItemMessage itemDescription 
         & tellPlayer
 
 doCommand (Take nameOfItem) = do
     maybeFoundItem <- findItemAtCurrentLocation nameOfItem
     case maybeFoundItem of
-        Just item   ->  do 
+        Just item   ->  do
             tellPlayer $ "You picked up " ++ show nameOfItem
-            items.at(item)._Just .= InBag
+            items.ix item .= InBag
         Nothing     ->  do
             tellPlayer $ "There is no '" ++ show nameOfItem ++ "' here."
 
 doCommand (Drop nameOfItem) = do
     state <- getState
-    let maybeFoundItem = state
-            & GS.bag
-            & filter (\item -> itemName item == nameOfItem)
-            & listToMaybe
+    let maybeFoundItem = find (\item -> itemName item == nameOfItem) (GS.bag state)
     case maybeFoundItem of
-        Just item   ->  do 
+        Just item   ->  do
             tellPlayer $ "You dropped " ++ show nameOfItem
-            items.at(item)._Just .= AtCoordinate (state^.playerAt)
+            items.ix item .= AtCoordinate (state^.playerAt)
         Nothing     ->  do
             tellPlayer $ "There is no '" ++ show nameOfItem ++ "' in your bag."
 
@@ -74,8 +74,7 @@ findItemAtCurrentLocation nameOfItem = do
     state^.items
         & Map.filter ((==) $ AtCoordinate $ state^.playerAt)
         & Map.keys
-        & filter (\item -> itemName item == nameOfItem)
-        & listToMaybe
+        & find (\item -> itemName item == nameOfItem)
         & return
 
 getPlayerLocation :: Katacombs Location
@@ -83,7 +82,7 @@ getPlayerLocation = do
     gameMap <- getMap
     state <- getState
     case Map.lookup (state^.playerAt) gameMap of
-        Just location   -> return $ location
+        Just location   -> return location
         Nothing         -> return $ Location "Limbo" "you shouldn't be here" -- TODO make this impossible
 
 displayItemsAtLocation :: Katacombs ()

@@ -115,5 +115,5 @@ spec = do
                     doCommand Bag
             message `shouldContain` ["The bag contains: 'flute' 'rusty key'"]
         it "should display a message when the bag is empty" $ do
-            let message = messageAfterCommand (Bag)
+            let message = messageAfterCommand Bag
             message `shouldBe` ["The bag is empty."]
