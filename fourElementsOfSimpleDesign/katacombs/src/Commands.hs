@@ -18,12 +18,7 @@ import Data.List (find)
 doCommand :: Command -> Katacombs ()
 doCommand (Go direction) = do
     moveIn direction
-
-    location <- getPlayerLocation
-    tellPlayer $ location^.title
-    tellPlayer $ location^.description
-
-    displayItemsAtLocation
+    doCommand LookAround
 
 doCommand (Look toDirection) =
     tellPlayer $ "You see the " ++ show toDirection
