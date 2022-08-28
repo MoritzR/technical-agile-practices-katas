@@ -105,6 +105,7 @@ showItemsInBag items
 getItemsAtPlayerLocation :: Katacombs [Item]
 getItemsAtPlayerLocation = do 
     state <- getState
-    return $ state^.items
+    state^.items
             & Map.filter ((==) $ AtCoordinate $ state^.playerAt)
             & Map.keys
+            & return
