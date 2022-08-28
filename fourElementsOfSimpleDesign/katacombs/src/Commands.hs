@@ -106,6 +106,6 @@ getItemsAtPlayerLocation :: Katacombs [Item]
 getItemsAtPlayerLocation = do 
     state <- getState
     state^.items
-            & Map.filter ((==) $ AtCoordinate $ state^.playerAt)
-            & Map.keys
-            & return
+        & Map.filter ((==) $ AtCoordinate $ state^.playerAt)
+        & Map.keys
+        & return
