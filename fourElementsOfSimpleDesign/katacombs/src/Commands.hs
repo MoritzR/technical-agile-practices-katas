@@ -65,10 +65,8 @@ doCommand LookAround = do
 
 findItemAtCurrentLocation :: ItemName -> Katacombs (Maybe Item)
 findItemAtCurrentLocation nameOfItem = do
-    state <- getState
-    state^.items
-        & Map.filter ((==) $ AtCoordinate $ state^.playerAt)
-        & Map.keys
+    itemsAtPlayerLocation <- getItemsAtPlayerLocation
+    itemsAtPlayerLocation
         & find (\item -> itemName item == nameOfItem)
         & return
 
@@ -82,10 +80,8 @@ getPlayerLocation = do
 
 displayItemsAtLocation :: Katacombs ()
 displayItemsAtLocation = do
-    state <- getState
-    let itemNames = state^.items
-            & Map.filter ((==) $ AtCoordinate $ state^.playerAt)
-            & Map.keys
+    itemsAtPlayerLocation <- getItemsAtPlayerLocation
+    let itemNames = itemsAtPlayerLocation
             & map itemName
             & map (\(ItemName name) -> "'" ++ name ++ "'")
     unless (null itemNames) $
@@ -105,3 +101,10 @@ showItemsInBag items
         where names = items
                         & map itemName
                         & map (\(ItemName name) -> "'" ++ name ++ "'")
+
+getItemsAtPlayerLocation :: Katacombs [Item]
+getItemsAtPlayerLocation = do 
+    state <- getState
+    return $ state^.items
+            & Map.filter ((==) $ AtCoordinate $ state^.playerAt)
+            & Map.keys
