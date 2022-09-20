@@ -74,7 +74,7 @@ getPlayerLocation :: Katacombs Location
 getPlayerLocation = do
     gameMap <- getMap
     state <- getState
-    case Map.lookup (state^.playerAt) gameMap of
+    case gameMap^.at (state^.playerAt) of
         Just location   -> return location
         Nothing         -> return $ Location "Limbo" "you shouldn't be here" -- TODO make this impossible
 
