@@ -24,8 +24,9 @@ doCommand (Look toDirection) =
     tellPlayer $ "You see the " ++ show toDirection
 
 doCommand (LookAt nameOfItem) = do
-    maybeItem <- findItemAtCurrentLocation nameOfItem
     let noItemMessage = "There is no '" ++ show nameOfItem ++ "' here."
+    
+    maybeItem <- findItemAtCurrentLocation nameOfItem
     maybeItem
         & maybe noItemMessage itemDescription 
         & tellPlayer
