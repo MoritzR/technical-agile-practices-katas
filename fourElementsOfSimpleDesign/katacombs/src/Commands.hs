@@ -14,6 +14,7 @@ import Control.Lens ((^.), (.=), (+=), (-=), at, _Just, Ixed (ix))
 import Control.Monad (unless)
 import Model
 import Data.List (find)
+import Control.Lens.Combinators (use)
 
 doCommand :: Command -> Katacombs ()
 doCommand (Go direction) = do
@@ -74,8 +75,8 @@ findItemAtCurrentLocation nameOfItem = do
 getPlayerLocation :: Katacombs Location
 getPlayerLocation = do
     gameMap <- getMap
-    state <- getState
-    case gameMap^.at (state^.playerAt) of
+    playerPosition <- use playerAt
+    case gameMap^.at playerPosition of
         Just location   -> return location
         Nothing         -> return $ Location "Limbo" "you shouldn't be here" -- TODO make this impossible
 
