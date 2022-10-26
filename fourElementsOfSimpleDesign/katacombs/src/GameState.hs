@@ -41,4 +41,8 @@ gameMap = createGameMap
         _title = "Corridor",
         _description = "A long corridor, with cells to each side."
         })
+    , ((0, 2), Location {
+        _title = "Corridor",
+        _description = "A long corridor, with cells to each side and a closed door to the north."
+        })
     ]
