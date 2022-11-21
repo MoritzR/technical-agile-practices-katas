@@ -4,6 +4,7 @@ import qualified Data.Map as Map
 import Data.Function ((&))
 import Control.Lens ((^.))
 import Model
+import qualified Items
 import qualified Data.Bifunctor as Bifunctor
 
 bag :: GameState -> [Item]
@@ -24,11 +25,7 @@ createGameMap list = list
 initialGameState :: GameState
 initialGameState = GameState {
     _playerAt = Coordinate 0 0,
-    _items = createItems
-        [   (Item {
-                itemName = ItemName "rusted key",
-                itemDescription = "A rusted key, the head of this key resembles a horse." }
-            , (0, 0))]
+    _items = createItems  [(Items.rustedKey, (0, 0))]
 }
 
 gameMap :: GameMap
